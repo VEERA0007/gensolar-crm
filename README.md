@@ -83,3 +83,14 @@ The manager **Engineering** tab is now **EPC** (Engineering, Procurement, Constr
 - **Construction:** 11-step schedule with suggested durations from the design, timeline chart, progress, site checklist and notes.
 - Save, reopen and start new EPC projects with the buttons at the top of the tab. Data is stored on the device (`gs_epc_v1`, `gs_epc_projects_v1`); there is no cloud sync.
 - Rates, module data, inverter data and pipe sections are example values. Replace them before quoting. Output is preliminary and needs engineer sign-off.
+
+## Web app
+
+The same app runs in a browser. `web/build-web.mjs` copies the Android app's `index.html` and assets into `web/dist` and adds `web/web-shim.js`, which provides the same sign-in, leads, team and share features through the Firebase web SDK (same Firebase project, same `firestore.rules`). The **Deploy GenSolar Web** workflow publishes it to GitHub Pages on every push to `main`.
+
+One-time setup:
+1. GitHub: Settings, Pages, Build and deployment, Source: **GitHub Actions**.
+2. Firebase console: Authentication, Settings, Authorized domains, add `veera0007.github.io`.
+3. If phone sign-in on the website reports an API key or app error, add a Web app in Firebase (Project settings, Your apps) and paste its `apiKey` and `appId` into `web/firebase-config.js`.
+
+The website is at `https://veera0007.github.io/gensolar-crm/`. To test locally: `node web/build-web.mjs`, then serve `web/dist` and open it. `node tests/web-shim-smoke.mjs` checks the website build against an in-memory stand-in for Firebase.
