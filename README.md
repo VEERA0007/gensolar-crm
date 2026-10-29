@@ -73,3 +73,13 @@ Managers and admins get a **Team** tab listing role requests. Approve gives `rep
 - Leads now carry an optional dealer and a next follow-up date. These sync to the cloud with each lead.
 - Access is enforced by the existing Firestore rules: representatives only load leads assigned to them, so the figures a manager sees come from the whole organization and a representative's never do.
 - The sales target is saved on the phone only.
+
+## v1.9.5: EPC tab
+
+The manager **Engineering** tab is now **EPC** (Engineering, Procurement, Construction). It keeps everything that was in Engineering and adds the rest of the project cycle.
+
+- **Engineering:** Site (the previous site, resource and pre-sales checklist), Layout (module, array blocks, tilt, spacing, foundation, pipe sections, walkway), Drawings (3D view, side elevation, plan with foundation marking), Electrical (string length, strings per MPPT, DC and AC cable and breaker sizing), BOM (cut list and materials) and Documents.
+- **Procurement:** purchase list from the design with rate, vendor and status per item, GST, total and cost per Wp, vendor list, and copyable RFQ text.
+- **Construction:** 11-step schedule with suggested durations from the design, timeline chart, progress, site checklist and notes.
+- Save, reopen and start new EPC projects with the buttons at the top of the tab. Data is stored on the device (`gs_epc_v1`, `gs_epc_projects_v1`); there is no cloud sync.
+- Rates, module data, inverter data and pipe sections are example values. Replace them before quoting. Output is preliminary and needs engineer sign-off.

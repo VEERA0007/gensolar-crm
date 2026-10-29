@@ -198,6 +198,90 @@ html,body{margin:0;height:100%;background:#fff}
 #updateBar[hidden]{display:none}#updateBar span{flex:1}
 #updateBar button{border:0;border-radius:10px;padding:8px 14px;font:700 14px inherit;font-family:inherit;cursor:pointer}
 #updateNow{background:#f5c800;color:#10261f}#updateLater{background:transparent;color:#fff;padding:8px}
+
+/* ===== EPC tab ===== */
+#epcRoot{--fg:var(--ink);--accent:var(--deep);--accent-fg:var(--on-deep);--amber:var(--solar);--ok:var(--good);--soft:var(--surface-2);--steel:var(--muted);--module:#3949AB;--module-edge:#B5C0F0;
+  display:flex;flex-direction:column;gap:14px;min-width:0;font:14px/1.45 var(--font-body)}
+#epcRoot *{box-sizing:border-box}
+#epcRoot .ep-bar{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+#epcRoot .ep-meta{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:-6px}
+#epcRoot .ep-stages{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+#epcRoot .stage{background:transparent;color:var(--ink);border:0;border-right:1px solid var(--line);padding:10px 8px;cursor:pointer;font:700 14px var(--font-display);text-align:left}
+#epcRoot .stage:last-child{border-right:0}
+#epcRoot .stage small{display:block;font:400 11px var(--font-body);color:var(--muted);margin-top:2px}
+#epcRoot .stage[aria-selected="true"]{background:var(--deep);color:var(--on-deep)}
+#epcRoot .stage[aria-selected="true"] small{color:var(--on-deep);opacity:.8}
+#epcRoot .ep-tabs{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:14px;-webkit-overflow-scrolling:touch}
+#epcRoot .tab{flex:none;font:600 13px var(--font-body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:9px 14px;cursor:pointer}
+#epcRoot .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--deep)}
+#epcRoot .ep-stack{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+#epcRoot details.ep-grp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+#epcRoot details.ep-grp>summary{cursor:pointer;font:600 13px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:13px 0;list-style:none}
+#epcRoot details.ep-grp>summary::-webkit-details-marker{display:none}
+#epcRoot details.ep-grp>summary::after{content:"+";float:right;font-size:18px;line-height:1}
+#epcRoot details.ep-grp[open]>summary::after{content:"–"}
+#epcRoot details.ep-grp[open]{padding-bottom:14px}
+#epcRoot .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+#epcRoot .grid1{display:grid;gap:10px}
+#epcRoot label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:0}
+#epcRoot input,#epcRoot select,#epcRoot textarea{font:500 14px var(--font-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:7px 8px;border-radius:8px;min-width:0;width:100%}
+#epcRoot input:focus-visible,#epcRoot select:focus-visible,#epcRoot button:focus-visible{outline:2px solid var(--deep);outline-offset:1px}
+#epcRoot .ep-hint,#epcRoot .ep-note{font-size:12px;color:var(--muted);margin:8px 0 0;max-width:75ch}
+#epcRoot .blocks{display:grid;gap:8px}
+#epcRoot .brow{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr)) 30px;gap:6px;align-items:end}
+#epcRoot .brow.head{font:500 10px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+#epcRoot .brow input{padding:6px 5px;font-size:12.5px}
+#epcRoot .btn.sm{padding:7px 12px;font-size:13px}
+#epcRoot .brow .btn{padding:6px 0}
+#epcRoot .ep-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+#epcRoot .ep-sum div{background:var(--surface);padding:10px 12px}
+#epcRoot .ep-sum b{display:block;font:700 19px/1.15 var(--font-display);font-variant-numeric:tabular-nums}
+#epcRoot .ep-sum span{font:500 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#epcRoot .ep-chips{display:flex;flex-wrap:wrap;gap:6px}
+#epcRoot .ep-chip{font:500 12px var(--font-mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 10px;cursor:pointer;border-radius:8px}
+#epcRoot .ep-chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#epcRoot .ep-sheet{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow-x:auto;margin-top:8px}
+#epcRoot .ep-sheet svg{display:block;min-width:620px;width:100%;height:auto}
+#epcRoot .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:12px}
+#epcRoot table{border-collapse:collapse;width:100%;font-size:13px}
+#epcRoot th,#epcRoot td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+#epcRoot th{font:500 10px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--soft)}
+#epcRoot td.n,#epcRoot th.n{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+#epcRoot tr.grp td{font:600 12px var(--font-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--soft);color:var(--deep)}
+#epcRoot td input,#epcRoot td select{font-size:12.5px;padding:4px 6px;min-width:90px}
+#epcRoot td input[type=number]{min-width:70px;width:96px;text-align:right}
+#epcRoot h2{font:700 16px var(--font-display);margin:12px 0 8px;text-transform:none;letter-spacing:0;color:var(--ink)}
+#epcRoot .ep-banner{font-size:12px;border-left:3px solid var(--solar);background:var(--surface-2);padding:8px 12px;margin:0;max-width:80ch;border-radius:0 8px 8px 0}
+#epcRoot .inl{flex-direction:row;align-items:center;gap:8px}
+#epcRoot .inl input{width:90px}
+#epcRoot .checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 18px}
+#epcRoot .checks label{flex-direction:row;align-items:center;gap:8px;font-size:13px;color:var(--ink)}
+#epcRoot .checks input{width:auto}
+#epcRoot td input[type=checkbox]{min-width:0;width:auto}
+#epcRoot .pill{display:inline-block;font:500 11px var(--font-mono);padding:2px 8px;border:1px solid var(--line);border-radius:6px}
+#epcRoot .pill.ok{color:var(--good);border-color:var(--good)}
+#epcRoot .pill.warn{color:var(--warn);border-color:var(--warn)}
+#epcRoot .copybox{height:120px;font:12px var(--font-mono)}
+#epcRoot .tag{font:500 10.5px var(--font-mono);color:var(--muted)}
+#epcRoot .d-line{stroke:var(--muted);stroke-width:1;fill:none}
+#epcRoot .d-txt{fill:var(--ink);font:500 12px var(--font-mono)}
+#epcRoot .d-sm{fill:var(--muted);font:500 11px var(--font-mono)}
+#epcRoot .d-ground{stroke:var(--ink);stroke-width:2;fill:none}
+#epcRoot .d-col{stroke:var(--steel);stroke-width:4;fill:none;stroke-linecap:round}
+#epcRoot .d-raf{stroke:var(--steel);stroke-width:5;fill:none;stroke-linecap:round}
+#epcRoot .d-pur{stroke:var(--steel);stroke-width:2.2;fill:none}
+#epcRoot .d-brace{stroke:var(--steel);stroke-width:2;fill:none}
+#epcRoot .d-found{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.2}
+#epcRoot .d-mod{fill:var(--module);stroke:var(--module-edge);stroke-width:1;fill-opacity:.9}
+#epcRoot .d-mod-l{fill:none;stroke:var(--module-edge);stroke-width:1.2;stroke-dasharray:4 3}
+#epcRoot .d-walk{fill:var(--solar);stroke:var(--ink);stroke-width:.8}
+#epcRoot .d-slab{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
+#epcRoot .g-todo{fill:var(--deep);opacity:.55}
+#epcRoot .g-prog{fill:var(--solar)}
+#epcRoot .g-done{fill:var(--good)}
+#epcRoot .g-lbl{fill:var(--ink);font:500 12px var(--font-mono)}
+#epcRoot .g-grid{stroke:var(--line);stroke-width:1}
+@media(max-width:420px){#epcRoot .grid2{gap:8px}#epcRoot .stage{font-size:13px;padding:9px 7px}}
 </style></head><body>
 <div id="splash"><img src="gensolar_app_icon.png" alt="GenSolar"><p>POWERING A GREENER TOMORROW</p></div><script>setTimeout(function(){var e=document.getElementById("splash");if(e){e.classList.add("out");setTimeout(function(){e.remove()},500)}},1600)</script>
 <div id="authGate" class="wgate"><main class="wapp">
@@ -459,8 +543,34 @@ html,body{margin:0;height:100%;background:#fff}
     </section>
 
     <section id="view-engineering" class="page" hidden>
-      <h1>Engineering &amp; site design</h1>
-      <p class="lede">Use this workspace for preliminary panel sizing, roof fit, orientation, inverter sizing and site-survey readiness. Enter solar-resource figures from a verified assessment; this page does not fetch live satellite data.</p>
+      <h1>EPC</h1>
+      <p class="lede">Engineering, Procurement and Construction for each project, in one place.</p>
+      <div id="epcRoot">
+        <div class="ep-bar">
+          <select id="epc_projSel" aria-label="Saved EPC projects"></select>
+          <button class="btn alt sm" id="epc_saveProj" type="button">Save project</button>
+          <button class="btn alt sm" id="epc_newProj" type="button">New</button>
+          <button class="btn alt sm" id="epc_loadRef" type="button">Example</button>
+        </div>
+        <div class="ep-meta" id="epc_hdrProject"></div>
+        <nav class="ep-stages" id="epc_stages" aria-label="EPC stages">
+          <button class="stage" data-st="eng" aria-selected="true">Engineering<small>Design and drawings</small></button>
+          <button class="stage" data-st="proc" aria-selected="false">Procurement<small>Items, rates, vendors</small></button>
+          <button class="stage" data-st="cons" aria-selected="false">Construction<small>Schedule and site</small></button>
+        </nav>
+
+        <div id="epc_st-eng">
+          <div class="ep-tabs" role="tablist" id="epc_tabs">
+            <button class="tab" role="tab" data-t="site" aria-selected="true">Site</button>
+            <button class="tab" role="tab" data-t="layout" aria-selected="false">Layout</button>
+            <button class="tab" role="tab" data-t="draw" aria-selected="false">Drawings</button>
+            <button class="tab" role="tab" data-t="elec" aria-selected="false">Electrical</button>
+            <button class="tab" role="tab" data-t="bom" aria-selected="false">BOM</button>
+            <button class="tab" role="tab" data-t="docs" aria-selected="false">Documents</button>
+          </div>
+
+          <section id="epc_p-site" style="display:flex;flex-direction:column;gap:14px">
+            <p class="lede">Preliminary panel sizing, roof fit, orientation, inverter sizing and site-survey readiness. Enter solar-resource figures from a verified assessment; this page does not fetch live satellite data.</p>
       <div class="panel" style="margin-top:14px">
         <h2>Site and system inputs</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px">
@@ -524,6 +634,170 @@ html,body{margin:0;height:100%;background:#fff}
           <div class="stat"><b>8</b><span>Commissioning and handover</span></div>
         </div>
       </div>
+    
+          </section>
+
+          <section id="epc_p-layout" hidden>
+            <div class="ep-sum" id="epc_sum"></div>
+            <div id="epc_inputs" class="ep-stack">
+
+  <details class="ep-grp" open><summary>Project</summary>
+    <div class="grid1">
+      <label>Project name<input id="epc_f-name" data-k="project.name" type="text"></label>
+      <div class="grid2">
+        <label>Client<input data-k="project.client" type="text"></label>
+        <label>Site<input data-k="project.site" type="text"></label>
+      </div>
+    </div>
+  </details>
+
+  <details class="ep-grp" open><summary>Module</summary>
+    <div class="grid2">
+      <label>Power (Wp)<input data-k="module.wp" type="number" min="100" step="5"></label>
+      <label>Orientation
+        <select data-k="module.orient"><option value="portrait">Portrait (long side up the slope)</option><option value="landscape">Landscape (long side across)</option></select></label>
+      <label>Length (mm)<input data-k="module.len" type="number" min="500" step="1"></label>
+      <label>Width (mm)<input data-k="module.wid" type="number" min="500" step="1"></label>
+      <label>Gap between modules (mm)<input data-k="gap" type="number" min="0" step="1"></label>
+    </div>
+  </details>
+
+  <details class="ep-grp" open><summary>Array blocks</summary>
+    <div class="blocks" id="epc_blocks"></div>
+    <div style="margin-top:10px"><button class="btn alt" id="epc_addBlock" type="button">+ Add block</button></div>
+    <p class="ep-hint">Rows run up the slope. Per row runs along the purlin. Low col. is the shortest column height of that block (mm).</p>
+  </details>
+
+  <details class="ep-grp" open><summary>Structure</summary>
+    <div class="grid2">
+      <label>Tilt (°)<input data-k="tilt" type="number" min="0" max="30" step="0.5"></label>
+      <label>Frame spacing (mm)<input data-k="frameSpacing" type="number" min="1000" step="10"></label>
+      <label>Column spacing, plan (mm)<input data-k="colSpacingH" type="number" min="1000" step="10"></label>
+      <label>Column inset from rafter end (mm)<input data-k="colInset" type="number" min="0" step="10"></label>
+      <label>Rafter overhang past modules (mm)<input data-k="rafterOvh" type="number" min="0" step="10"></label>
+      <label>Purlin overhang past end frame (mm)<input data-k="purlinOvh" type="number" min="0" step="10"></label>
+      <label>Stock pipe length (mm)<input data-k="stock" type="number" min="3000" step="100"></label>
+    </div>
+  </details>
+
+  <details class="ep-grp" open><summary>Foundation pedestal</summary>
+    <div class="grid2">
+      <label>Width (mm)<input data-k="base.w" type="number" min="100" step="10"></label>
+      <label>Depth (mm)<input data-k="base.d" type="number" min="100" step="10"></label>
+      <label>Height (mm)<input data-k="base.h" type="number" min="100" step="10"></label>
+    </div>
+  </details>
+
+  <details class="ep-grp" open><summary>Sections and weights</summary>
+    <div class="grid2">
+      <label>Column section<input data-k="pipes.col.label" type="text"></label>
+      <label>kg per m<input data-k="pipes.col.kg" type="number" step="0.01" min="0"></label>
+      <label>Rafter section<input data-k="pipes.raf.label" type="text"></label>
+      <label>kg per m<input data-k="pipes.raf.kg" type="number" step="0.01" min="0"></label>
+      <label>Purlin section<input data-k="pipes.pur.label" type="text"></label>
+      <label>kg per m<input data-k="pipes.pur.kg" type="number" step="0.01" min="0"></label>
+      <label>Brace / tie section<input data-k="pipes.brc.label" type="text"></label>
+      <label>kg per m<input data-k="pipes.brc.kg" type="number" step="0.01" min="0"></label>
+    </div>
+    <p class="ep-hint">Section names and weights are placeholders. Replace them with your fabricator's sections.</p>
+  </details>
+
+  <details class="ep-grp" open><summary>Maintenance walkway</summary>
+    <div class="grid2">
+      <label>Include<select data-k="walk.on"><option value="1">Yes</option><option value="0">No</option></select></label>
+      <label>Length (mm)<input data-k="walk.len" type="number" min="0" step="10"></label>
+    </div>
+  </details>
+
+  
+            </div>
+          </section>
+
+          <section id="epc_p-draw" hidden>
+            <div class="ep-sum" id="epc_sum2"></div>
+            <div class="ep-bar" style="margin-top:12px"><div class="ep-chips" id="epc_blockChips"></div></div>
+            <div class="ep-bar"><div class="ep-chips" id="epc_viewChips">
+              <button class="ep-chip" data-v="iso" aria-pressed="true">3D view</button>
+              <button class="ep-chip" data-v="elev" aria-pressed="false">Side elevation</button>
+              <button class="ep-chip" data-v="plan" aria-pressed="false">Plan and marking</button></div>
+              <div class="ep-chips" id="epc_modChips"><button class="ep-chip" id="epc_vStruct" aria-pressed="false">Structure only</button><button class="ep-chip" id="epc_vPanels" aria-pressed="true">With modules</button></div></div>
+            <div class="ep-sheet" id="epc_isoSheet"></div>
+            <div class="ep-sheet" id="epc_elevSheet" hidden></div>
+            <div class="ep-sheet" id="epc_planSheet" hidden></div>
+            <p class="ep-note" id="epc_planNote" hidden>Squares are the foundation pedestals. Mark these points on the terrace before casting, measuring from a fixed parapet edge.</p>
+          </section>
+
+<section id="epc_p-elec" hidden>
+    <details class="ep-grp" open><summary>Module and inverter data</summary>
+      <div class="grid2" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        <label>Module Voc (V)<input id="epc_e-voc" data-x="elec.voc" data-after="elec" type="number" step="0.1"></label>
+        <label>Module Vmp (V)<input id="epc_e-vmp" data-x="elec.vmp" data-after="elec" type="number" step="0.1"></label>
+        <label>Module Isc (A)<input id="epc_e-isc" data-x="elec.isc" data-after="elec" type="number" step="0.01"></label>
+        <label>Module Imp (A)<input id="epc_e-imp" data-x="elec.imp" data-after="elec" type="number" step="0.01"></label>
+        <label>Voc temp. coeff. (%/°C)<input id="epc_e-tcv" data-x="elec.tcVoc" data-after="elec" type="number" step="0.01"></label>
+        <label>Vmp temp. coeff. (%/°C)<input id="epc_e-tcp" data-x="elec.tcPmax" data-after="elec" type="number" step="0.01"></label>
+        <label>Site min. temp. (°C)<input id="epc_e-tmin" data-x="elec.tmin" data-after="elec" type="number"></label>
+        <label>Cell max. temp. (°C)<input id="epc_e-tmax" data-x="elec.tmax" data-after="elec" type="number"></label>
+        <label>Inverter max DC volts (V)<input id="epc_e-vmax" data-x="elec.invVmax" data-after="elec" type="number"></label>
+        <label>MPPT min (V)<input id="epc_e-mmin" data-x="elec.mpptMin" data-after="elec" type="number"></label>
+        <label>MPPT max (V)<input id="epc_e-mmax" data-x="elec.mpptMax" data-after="elec" type="number"></label>
+        <label>MPPT inputs<input id="epc_e-mn" data-x="elec.mppts" data-after="elec" type="number" min="1"></label>
+        <label>Max current per MPPT (A)<input id="epc_e-imax" data-x="elec.imax" data-after="elec" type="number"></label>
+        <label>Modules per string (0 = auto)<input id="epc_e-ps" data-x="elec.perString" data-after="elec" type="number" min="0"></label>
+        <label>DC cable run, one way (m)<input id="epc_e-dcl" data-x="elec.cableLen" data-after="elec" type="number"></label>
+        <label>AC cable run (m)<input id="epc_e-acl" data-x="elec.acLen" data-after="elec" type="number"></label>
+      </div>
+      <p class="ep-hint">Defaults are typical values for a 540 Wp module and a 30 kW three-phase inverter. Replace them with your datasheets.</p>
+    </details>
+    <h2>String and cable sizing</h2>
+    <div class="tblwrap" id="epc_elecOut"></div>
+    <p class="ep-note">Indicative sizing for proposals. The final string design and cable sizes must follow the inverter and cable datasheets and the applicable electrical code.</p>
+  </section>
+<section id="epc_p-bom" hidden>
+    <div class="ep-bar"><button class="btn" id="epc_copyCsv" type="button">Copy as CSV</button><span class="ep-note" id="epc_copyMsg"></span></div>
+    <div id="epc_copyFallback" hidden><p class="ep-note">Copy this text manually (select all, then copy):</p><textarea class="copybox" id="epc_copyArea" readonly></textarea></div>
+    <h2>Cut list</h2><div class="tblwrap" id="epc_cutTbl"></div>
+    <h2>Materials</h2><div class="tblwrap" id="epc_bomTbl"></div>
+    <p class="ep-note" id="epc_bomNote"></p>
+  </section>
+<section id="epc_p-docs" hidden>
+    <h2>Engineering documents</h2>
+    <div class="ep-note" id="epc_docsCount" style="margin-bottom:10px"></div>
+    <div class="checks" id="epc_docsList"></div>
+  </section>
+        </div>
+
+<div id="epc_st-proc" hidden>
+  <div class="ep-sum" id="epc_procSum"></div>
+  <p class="ep-banner" style="margin-top:14px">Rates are example values so the page shows how totals work. Replace each rate with your supplier quote.</p>
+  <div class="ep-bar">
+    <label class="inl">GST %<input id="epc_gst" data-x="proc.gst" data-after="proc" type="number" min="0" step="0.5"></label>
+    <button class="btn" id="epc_copyRfq" type="button">Copy RFQ text</button>
+    <span class="ep-note" id="epc_rfqMsg"></span>
+  </div>
+  <div id="epc_rfqFallback" hidden><p class="ep-note">Copy this text manually (select all, then copy):</p><textarea class="copybox" id="epc_rfqArea" readonly></textarea></div>
+  <h2>Purchase list</h2>
+  <div class="tblwrap" id="epc_procTbl"></div>
+  <h2>Vendors</h2>
+  <div class="tblwrap" id="epc_vendTbl"></div>
+  <button class="btn alt" id="epc_addVendor" type="button">+ Add vendor</button>
+</div>
+<div id="epc_st-cons" hidden>
+  <div class="ep-sum" id="epc_consSum"></div>
+  <div class="ep-bar" style="margin-top:14px">
+    <label class="inl">Start date<input id="epc_cstart" data-x="cons.start" data-after="cons" type="date" style="width:160px"></label>
+    <span class="ep-note">Durations are suggested from the design. Edit any duration to override it.</span>
+  </div>
+  <h2>Schedule</h2>
+  <div class="tblwrap" id="epc_consTbl"></div>
+  <h2>Timeline</h2>
+  <div class="ep-sheet" id="epc_gantt"></div>
+  <h2>Site checklist</h2>
+  <div class="checks" id="epc_siteChk"></div>
+  <h2>Site notes</h2>
+  <textarea class="copybox" id="epc_siteNotes" data-x="cons.notes" style="height:120px"></textarea>
+</div>
+      </div>
     </section>
   </main>
   <nav class="tabbar" aria-label="Main">
@@ -531,7 +805,7 @@ html,body{margin:0;height:100%;background:#fff}
     <button type="button" data-tab="leads" id="tabLeads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg><span id="tabLeadsLbl">Leads</span></button>
     <button type="button" data-tab="crm" id="tabCrm" hidden aria-label="Manager dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Dashboard</button>
     <button type="button" data-tab="team" id="tabTeam" hidden aria-label="Team approvals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.500 2.700-5.500 6-5.500s6 2 6 5.500"/><path d="M17 11l2 2 4-4"/></svg><span>Team</span></button>
-    <button type="button" data-tab="engineering" id="tabEng" hidden aria-label="Engineering and site design"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>Engineering</button>
+    <button type="button" data-tab="engineering" id="tabEng" hidden aria-label="EPC: engineering, procurement and construction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>EPC</button>
     <button type="button" data-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</button>
   </nav>
 </div>
@@ -1226,7 +1500,7 @@ function model(p){
   window.requestFeatureLogin=function(feature){
     if(session&&session.mode==='user'){
       if(role()==='guest'){showFeatureLogin(feature);return;}
-      if(feature==='Engineering'&&role()!=='manager'){toast('Engineering is available to managers and admins');return}
+      if(feature==='Engineering'&&role()!=='manager'){toast('EPC is available to managers and admins');return}
       toast(feature+' selected. Your account permissions will be checked.');
       location.hash=feature==='Engineering'?'#engineering':'#est';return;
     }
@@ -1400,6 +1674,604 @@ function model(p){
   try{var _v=window.GenSolarNative&&window.GenSolarNative.appVersion?String(window.GenSolarNative.appVersion()):'';if(_v)$('verLabel').textContent='GenSolar Pro '+_v}catch(e){}
   setTimeout(checkForUpdate,3000);
   paintAvatar();route();
+})();
+</script>
+<script id="epcScript">
+(function(){
+var root=document.getElementById('epcRoot');if(!root)return;
+function g(id){return document.getElementById('epc_'+id)}
+var KEY='gs_epc_v1';
+var REF={
+  project:{name:'Dr Sudhir',client:'Dr Sudhir',site:'Hyderabad'},
+  module:{wp:540,len:2094,wid:1038,orient:'portrait'},gap:20,
+  blocks:[{name:'Main front',rows:3,perRow:10,low:1590},{name:'Main rear',rows:2,perRow:14,low:1590},{name:'Tower roof',rows:3,perRow:3,low:567}],
+  tilt:5,frameSpacing:2661,colSpacingH:2916,colInset:360,rafterOvh:100,purlinOvh:445,stock:6000,
+  base:{w:400,d:400,h:500},
+  pipes:{col:{label:'GI pipe 76.1 x 3.2',kg:5.75},raf:{label:'GI pipe 60.3 x 3.2',kg:4.51},pur:{label:'GI SHS 40 x 40 x 2',kg:2.2},brc:{label:'GI pipe 48.3 x 3.2',kg:3.56}},
+  walk:{on:'1',len:7545}
+};
+var BLANK=JSON.parse(JSON.stringify(REF));
+BLANK.project={name:'New project',client:'',site:''};
+BLANK.blocks=[{name:'Block 1',rows:2,perRow:10,low:1200}];
+BLANK.walk={on:'0',len:0};
+var todayISO=new Date().toISOString().slice(0,10);
+var EXTRA={
+  proc:{gst:18,items:{}},
+  vendors:[{name:'Module supplier',supplies:'Solar modules',contact:'',lead:'10 days'},
+           {name:'Structure fabricator',supplies:'GI pipes, fabrication, walkway',contact:'',lead:'7 days'},
+           {name:'Electrical supplier',supplies:'Inverter, DCDB, ACDB, cables',contact:'',lead:'7 days'}],
+  elec:{voc:49.5,vmp:41.6,isc:13.9,imp:12.99,tcVoc:-0.27,tcPmax:-0.35,tmin:10,tmax:65,invVmax:1100,mpptMin:200,mpptMax:1000,mppts:3,imax:40,perString:0,cableLen:60,acLen:30},
+  cons:{start:todayISO,tasks:{},checks:{},notes:''},
+  docs:{}
+};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function fill(o,d){Object.keys(d).forEach(function(k){
+  if(o[k]===undefined)o[k]=clone(d[k]);
+  else if(d[k]&&typeof d[k]==='object'&&!Array.isArray(d[k])&&o[k]&&typeof o[k]==='object')fill(o[k],d[k]);});return o}
+fill(REF,EXTRA);fill(BLANK,EXTRA);
+
+var S=null;
+try{var raw=localStorage.getItem(KEY);if(raw)S=JSON.parse(raw)}catch(e){}
+if(!S||!S.blocks||!S.module)S=JSON.parse(JSON.stringify(REF));
+fill(S,EXTRA);
+var sel=0,tab='site',showPanels=true,view='iso';
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function getp(p){return p.split('.').reduce(function(o,k){return o&&o[k]},S)}
+function setp(p,v){var a=p.split('.'),o=S;for(var i=0;i<a.length-1;i++){if(o[a[i]]==null||typeof o[a[i]]!=='object')o[a[i]]={};o=o[a[i]]}o[a[a.length-1]]=v}
+function fmt(n){return Math.round(n).toLocaleString('en-IN')}
+function f1(n){return (Math.round(n*10)/10).toLocaleString('en-IN')}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function num(v,d){var x=parseFloat(v);return isFinite(x)?x:d}
+
+/* ---------- calculation ---------- */
+function calcBlock(b){
+  var m=S.module,t=num(S.tilt,5)*Math.PI/180,ct=Math.cos(t),st=Math.sin(t);
+  var portrait=m.orient==='portrait';
+  var dS=portrait?m.len:m.wid,dP=portrait?m.wid:m.len,gap=S.gap;
+  var rows=Math.max(1,Math.round(b.rows)),per=Math.max(1,Math.round(b.perRow));
+  var rafterLen=rows*dS+(rows-1)*gap+2*S.rafterOvh;
+  var runLen=per*dP+(per-1)*gap;
+  var fs=Math.max(500,S.frameSpacing);
+  var nRaf=Math.max(2,Math.ceil((runLen-2*S.purlinOvh)/fs-1e-9)+1);
+  var purlinLen=Math.max(runLen,(nRaf-1)*fs+2*S.purlinOvh);
+  var sSl=Math.max(500,S.colSpacingH)/ct;
+  var inner=Math.max(0,rafterLen-2*S.colInset);
+  var nCol=Math.max(2,Math.ceil(inner/sSl-1e-9)+1);
+  var span=inner/(nCol-1),spanH=span*ct,spanZ=span*st;
+  var heights=[];for(var i=0;i<nCol;i++)heights.push(b.low+i*spanZ);
+  return {b:b,t:t,ct:ct,st:st,dS:dS,dP:dP,gap:gap,rows:rows,per:per,mods:rows*per,rafterLen:rafterLen,runLen:runLen,
+    nRaf:nRaf,purlinLen:purlinLen,fs:fs,nCol:nCol,span:span,spanH:spanH,spanZ:spanZ,heights:heights,
+    purlins:rows*2,cols:nCol*nRaf,x0:(purlinLen-(nRaf-1)*fs)/2,hExt:rafterLen*ct};
+}
+function calcAll(){
+  var cs=S.blocks.map(calcBlock);
+  var cut=[],P=S.pipes;
+  cs.forEach(function(c){
+    var n=c.b.name||'Block';
+    c.heights.forEach(function(h,i){cut.push({blk:n,member:'Column '+(i+1),cat:'col',qty:c.nRaf,len:h})});
+    cut.push({blk:n,member:'Rafter',cat:'raf',qty:c.nRaf,len:c.rafterLen});
+    cut.push({blk:n,member:'Purlin',cat:'pur',qty:c.purlins,len:c.purlinLen});
+    var top=c.heights[c.nCol-1];
+    cut.push({blk:n,member:'Diagonal brace',cat:'brc',qty:c.nRaf,len:Math.hypot(c.spanH,0.75*top)});
+    cut.push({blk:n,member:'Column tie (across)',cat:'brc',qty:c.nCol,len:(c.nRaf-1)*c.fs});
+  });
+  var wk=null;
+  if(S.walk.on==='1'&&num(S.walk.len,0)>0){
+    var L=num(S.walk.len,0),sup=Math.ceil(L/Math.max(1000,S.frameSpacing))+1;
+    wk={len:L,sup:sup,supLen:500+595+697};
+  }
+  var cat={col:{name:'Columns',spec:P.col.label,kg:P.col.kg},raf:{name:'Rafters',spec:P.raf.label,kg:P.raf.kg},
+           pur:{name:'Purlins',spec:P.pur.label,kg:P.pur.kg},brc:{name:'Braces and ties',spec:P.brc.label,kg:P.brc.kg}};
+  Object.keys(cat).forEach(function(k){cat[k].pcs=0;cat[k].len=0});
+  cut.forEach(function(r){cat[r.cat].pcs+=r.qty;cat[r.cat].len+=r.qty*r.len});
+  var steelKg=0;
+  Object.keys(cat).forEach(function(k){var x=cat[k];x.m=x.len/1000;x.stock=Math.ceil(x.len*1.05/S.stock);x.wt=x.m*x.kg;steelKg+=x.wt});
+  var mods=0,cols=0,mid=0,end=0,pj=0,rj=0;
+  cs.forEach(function(c){mods+=c.mods;cols+=c.cols;mid+=2*(c.per-1)*c.rows;end+=4*c.rows;pj+=c.purlins*c.nRaf;rj+=c.cols});
+  var conc=cols*S.base.w*S.base.d*S.base.h/1e9;
+  var kwp=mods*S.module.wp/1000;
+  var area=mods*S.module.len*S.module.wid/1e6;
+  var std=[3,5,6,8,10,12,15,20,25,30,40,50,60,75,100,125,150,200],inv=std[std.length-1];
+  for(var i=0;i<std.length;i++){if(std[i]>=kwp/1.25){inv=std[i];break}}
+  return {cs:cs,cut:cut,cat:cat,wk:wk,mods:mods,cols:cols,mid:mid,end:end,pj:pj,rj:rj,conc:conc,kwp:kwp,area:area,inv:inv,steelKg:steelKg};
+}
+
+/* ---------- inputs ---------- */
+function bindInputs(){
+  root.querySelectorAll('[data-k]').forEach(function(el){
+    var v=getp(el.getAttribute('data-k'));if(v!==undefined)el.value=v;
+  });
+  root.querySelectorAll('[data-x]').forEach(function(el){
+    var v=getp(el.getAttribute('data-x'));
+    if(el.type==='checkbox')el.checked=!!v;else if(v!==undefined&&v!==null)el.value=v;
+  });
+}
+function renderBlocks(){
+  var h='<div class="brow head"><span>Name</span><span>Rows</span><span>Per row</span><span>Low col.</span><span></span></div>';
+  S.blocks.forEach(function(b,i){
+    h+='<div class="brow"><input id="epc_bn'+i+'" data-b="'+i+'.name" type="text" aria-label="Block name" value="'+esc(b.name)+'">'+
+    '<input id="epc_br'+i+'" data-b="'+i+'.rows" type="number" min="1" aria-label="Rows" value="'+b.rows+'">'+
+    '<input id="epc_bp'+i+'" data-b="'+i+'.perRow" type="number" min="1" aria-label="Modules per row" value="'+b.perRow+'">'+
+    '<input id="epc_bl'+i+'" data-b="'+i+'.low" type="number" min="0" step="10" aria-label="Lowest column height" value="'+b.low+'">'+
+    '<button class="btn x" type="button" data-del="'+i+'" aria-label="Remove block">×</button></div>';
+  });
+  g('blocks').innerHTML=h;
+}
+g('inputs').addEventListener('input',function(e){
+  var el=e.target,k=el.getAttribute('data-k'),b=el.getAttribute('data-b');
+  if(k){var v=el.value;if(el.type==='number')v=num(v,0);setp(k,v)}
+  else if(b){var p=b.split('.'),i=+p[0];S.blocks[i][p[1]]=el.type==='number'?num(el.value,1):el.value;}
+  else return;
+  save();render();
+});
+g('inputs').addEventListener('click',function(e){
+  var d=e.target.getAttribute&&e.target.getAttribute('data-del');
+  if(d!==null&&d!==undefined&&S.blocks.length>1){S.blocks.splice(+d,1);if(sel>=S.blocks.length)sel=0;save();renderBlocks();render()}
+});
+g('addBlock').onclick=function(){
+  var n=S.blocks.length+1;S.blocks.push({name:'Block '+n,rows:2,perRow:10,low:S.blocks[0]?S.blocks[0].low:1200});
+  sel=S.blocks.length-1;save();renderBlocks();render();
+};
+function reload(o){S=JSON.parse(JSON.stringify(o));fill(S,EXTRA);sel=0;save();bindInputs();renderBlocks();render()}
+g('loadRef').onclick=function(){reload(REF)};
+
+/* ---------- tabs ---------- */
+g('tabs').addEventListener('click',function(e){
+  var t=e.target.getAttribute&&e.target.getAttribute('data-t');if(!t)return;
+  tab=t;
+  root.querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-t')===t?'true':'false')});
+  ['site','layout','draw','elec','bom','docs'].forEach(function(k){g('p-'+k).hidden=(k!==t)});
+});
+function chips(){
+  var h=S.blocks.map(function(b,i){return '<button class="ep-chip" data-sel="'+i+'" aria-pressed="'+(i===sel)+'">'+esc(b.name||('Block '+(i+1)))+'</button>'}).join('');
+  g('blockChips').innerHTML=h;
+}
+root.addEventListener('click',function(e){
+  var s=e.target.getAttribute&&e.target.getAttribute('data-sel');
+  if(s!==null&&s!==undefined){sel=+s;render()}
+});
+g('viewChips').addEventListener('click',function(e){var v=e.target.getAttribute&&e.target.getAttribute('data-v');if(v){view=v;render()}});
+g('vStruct').onclick=function(){showPanels=false;render()};
+g('vPanels').onclick=function(){showPanels=true;render()};
+
+/* ---------- drawing helpers ---------- */
+function dim(x1,y1,x2,y2,label,off,side){
+  // dimension line between two points, offset perpendicular
+  var dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy)||1,nx=-dy/L*off,ny=dx/L*off;
+  var a=[x1+nx,y1+ny],b=[x2+nx,y2+ny];
+  var s='<line class="d-line" x1="'+x1+'" y1="'+y1+'" x2="'+a[0]+'" y2="'+a[1]+'"/><line class="d-line" x1="'+x2+'" y1="'+y2+'" x2="'+b[0]+'" y2="'+b[1]+'"/>'+
+    '<line class="d-line" x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>'+
+    '<line class="d-line" x1="'+(a[0]-4)+'" y1="'+(a[1]+4)+'" x2="'+(a[0]+4)+'" y2="'+(a[1]-4)+'"/><line class="d-line" x1="'+(b[0]-4)+'" y1="'+(b[1]+4)+'" x2="'+(b[0]+4)+'" y2="'+(b[1]-4)+'"/>';
+  var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
+  if(Math.abs(dx)>=Math.abs(dy))s+='<text class="d-txt" x="'+mx+'" y="'+(ny<0?my-6:my+16)+'" text-anchor="middle">'+label+'</text>';
+  else s+='<text class="d-txt" x="'+(nx<0?mx-6:mx+6)+'" y="'+my+'" text-anchor="'+(nx<0?'end':'start')+'" dominant-baseline="middle">'+label+'</text>';
+  return s;
+}
+function titleBlock(c,W,H,view){
+  return '<text class="d-sm" x="16" y="'+(H-12)+'">'+esc(S.project.name||'')+' · '+esc(c.b.name||'')+' · '+view+' · '+c.mods+' modules · tilt '+S.tilt+'° · dimensions in mm</text>';
+}
+
+/* ---------- elevation ---------- */
+function elevation(c){
+  var W=980,H=470,pl=60,pr=60,pt=40,pb=90;
+  var y0=S.colInset*c.ct,hExt=c.hExt,tn=Math.tan(c.t);
+  var zS=c.b.low-y0*tn,zE=c.b.low+(hExt-y0)*tn;
+  var zmax=zE+250,sc=Math.min((W-pl-pr)/hExt,(H-pt-pb)/zmax);
+  var px=function(y){return pl+(hExt-y)*sc},py=function(z){return H-pb-z*sc};
+  var zr=function(y){return c.b.low+(y-y0)*tn};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Side elevation">';
+  s+='<line class="d-ground" x1="'+(pl-30)+'" y1="'+py(0)+'" x2="'+(W-pr+30)+'" y2="'+py(0)+'"/>';
+  s+='<rect class="d-slab" x="'+(pl-30)+'" y="'+py(0)+'" width="'+(W-pr-pl+60)+'" height="10"/>';
+  // modules
+  if(true){for(var r=0;r<c.rows;r++){
+    var a=(S.rafterOvh+r*(c.dS+c.gap))*c.ct,b2=(S.rafterOvh+r*(c.dS+c.gap)+c.dS)*c.ct;
+    var z1=zr(a)+80,z2=zr(b2)+80,th=Math.max(35*sc,3);
+    s+='<polygon class="d-mod" points="'+px(a)+','+py(z1)+' '+px(b2)+','+py(z2)+' '+px(b2)+','+(py(z2)-th)+' '+px(a)+','+(py(z1)-th)+'"/>';
+  }}
+  // rafter
+  s+='<line class="d-raf" x1="'+px(0)+'" y1="'+py(zr(0))+'" x2="'+px(hExt)+'" y2="'+py(zr(hExt))+'"/>';
+  // columns
+  for(var i=0;i<c.nCol;i++){
+    var y=y0+i*c.spanH,x=px(y),zt=zr(y),h=c.heights[i];
+    s+='<line class="d-col" x1="'+x+'" y1="'+py(0)+'" x2="'+x+'" y2="'+py(zt)+'"/>';
+    s+='<rect class="d-found" x="'+(x-9)+'" y="'+(py(0)-3)+'" width="18" height="6"/>';
+    s+='<text class="d-txt" x="'+(x-8)+'" y="'+((py(0)+py(zt))/2)+'" text-anchor="end">COLUMN '+(i+1)+' : '+fmt(h)+'</text>';
+  }
+  // dims
+  s+=dim(px(hExt),py(0)+12,px(0),py(0)+12,'Plan run : '+fmt(hExt)+' mm',34);
+  s+='<text class="d-txt" x="'+pl+'" y="'+(pt-8)+'">RAFTER : '+fmt(c.rafterLen)+' mm (along slope)</text>';
+  s+='<text class="d-txt" x="'+(W-pr-6)+'" y="'+(pt-8)+'" text-anchor="end">Tilt '+S.tilt+'°</text>';
+  s+=titleBlock(c,W,H,'Side elevation')+'</svg>';
+  return s;
+}
+
+/* ---------- plan ---------- */
+function plan(c){
+  var W=980,H=620,pl=130,pr=110,pt=70,pb=110;
+  var xe=c.purlinLen,ye=c.hExt;
+  var sc=Math.min((W-pl-pr)/xe,(H-pt-pb)/ye);
+  var px=function(x){return pl+x*sc},py=function(y){return pt+(ye-y)*sc}; // high edge at top
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Plan view with foundation marking">';
+  // modules outline
+  for(var r=0;r<c.rows;r++)for(var k=0;k<c.per;k++){
+    var xa=(c.purlinLen-c.runLen)/2+k*(c.dP+c.gap),ya=(S.rafterOvh+r*(c.dS+c.gap))*c.ct;
+    s+='<rect class="d-mod-l" x="'+px(xa)+'" y="'+py(ya+c.dS*c.ct)+'" width="'+(c.dP*sc)+'" height="'+(c.dS*c.ct*sc)+'"/>';
+  }
+  // purlins
+  for(var r2=0;r2<c.rows;r2++){
+    var base=S.rafterOvh+r2*(c.dS+c.gap);
+    [0.2,0.8].forEach(function(f){var y=(base+c.dS*f)*c.ct;s+='<line class="d-pur" x1="'+px(0)+'" y1="'+py(y)+'" x2="'+px(xe)+'" y2="'+py(y)+'"/>'});
+  }
+  // rafters
+  for(var j=0;j<c.nRaf;j++){var x=c.x0+j*c.fs;s+='<line class="d-raf" x1="'+px(x)+'" y1="'+py(0)+'" x2="'+px(x)+'" y2="'+py(ye)+'" style="stroke-width:3"/>'}
+  // foundations
+  var fw=Math.max(S.base.w*sc,8);
+  for(var j2=0;j2<c.nRaf;j2++)for(var i=0;i<c.nCol;i++){
+    var x2=c.x0+j2*c.fs,y2=S.colInset*c.ct+i*c.spanH;
+    s+='<rect class="d-found" x="'+(px(x2)-fw/2)+'" y="'+(py(y2)-fw/2)+'" width="'+fw+'" height="'+fw+'"/>';
+  }
+  // walkway hint
+  // dimensions
+  s+=dim(px(0),py(ye),px(xe),py(ye),'PURLIN : '+fmt(c.purlinLen)+' mm',-34);
+  if(c.nRaf>1)s+=dim(px(c.x0),py(0),px(c.x0+c.fs),py(0),fmt(c.fs),34);
+  s+=dim(px(0),py(0),px(0),py(ye),'RAFTER (plan) : '+fmt(ye),-34);
+  var ya0=S.colInset*c.ct;
+  s+=dim(px(xe),py(ya0),px(xe),py(ya0+c.spanH),fmt(c.spanH),34);
+  s+='<text class="d-sm" x="'+(px(xe)+8)+'" y="'+(py(0)+4)+'">low edge</text><text class="d-sm" x="'+(px(xe)+8)+'" y="'+(py(ye)+4)+'">high edge</text>';
+  s+=titleBlock(c,W,H,'Plan')+'</svg>';
+  return s;
+}
+
+/* ---------- 3D ---------- */
+function iso(c,panels){
+  var W=980,H=560;
+  var Xm=c.purlinLen,Ym=c.hExt;
+  var y0=S.colInset*c.ct,tn=Math.tan(c.t);
+  var zr=function(y){return c.b.low+(y-y0)*tn};
+  var C=Math.cos(Math.PI/6),SN=0.5;
+  function P(x,y,z){var yy=Ym-y;return [(x-yy)*C,(x+yy)*SN-z]}
+  // bounds
+  var pts=[],zmax=zr(Ym)+300;
+  [[0,0,0],[Xm,0,0],[0,Ym,0],[Xm,Ym,0],[0,Ym,zmax],[Xm,Ym,zmax],[0,0,zmax],[Xm,0,zmax]].forEach(function(p){pts.push(P(p[0],p[1],p[2]))});
+  var minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;
+  pts.forEach(function(p){minx=Math.min(minx,p[0]);maxx=Math.max(maxx,p[0]);miny=Math.min(miny,p[1]);maxy=Math.max(maxy,p[1])});
+  var sc=Math.min((W-80)/(maxx-minx),(H-90)/(maxy-miny));
+  var ox=40-minx*sc+((W-80)-(maxx-minx)*sc)/2,oy=30-miny*sc+((H-90)-(maxy-miny)*sc)/2;
+  function Q(x,y,z){var p=P(x,y,z);return (ox+p[0]*sc).toFixed(1)+','+(oy+p[1]*sc).toFixed(1)}
+  function L(cls,a,b,extra){return '<polyline class="'+cls+'" points="'+Q(a[0],a[1],a[2])+' '+Q(b[0],b[1],b[2])+'"'+(extra||'')+'/>'}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="3D view of the structure">';
+  // slab
+  s+='<polygon class="d-slab" points="'+Q(-300,-300,0)+' '+Q(Xm+300,-300,0)+' '+Q(Xm+300,Ym+300,0)+' '+Q(-300,Ym+300,0)+'"/>';
+  // back to front: x small and y large (far) first.  nearness = x + (Ym-y)
+  var items=[];
+  for(var j=0;j<c.nRaf;j++){
+    var x=c.x0+j*c.fs;
+    for(var i=0;i<c.nCol;i++){
+      var y=y0+i*c.spanH,zt=zr(y);
+      items.push({d:x+(Ym-y),f:(function(x,y,zt){return function(){
+        var fw=S.base.w/2;
+        return '<polygon class="d-found" points="'+Q(x-fw,y-fw,0)+' '+Q(x+fw,y-fw,0)+' '+Q(x+fw,y+fw,0)+' '+Q(x-fw,y+fw,0)+'"/>'+L('d-col',[x,y,0],[x,y,zt]);
+      }})(x,y,zt)});
+    }
+    items.push({d:x+(Ym-y0)-1,f:(function(x){return function(){
+      var top=c.heights[c.nCol-1],yb=y0+(c.nCol-1)*c.spanH,yp=y0+(c.nCol-2)*c.spanH;
+      return L('d-brace',[x,yp,0],[x,yb,top*0.75])+L('d-raf',[x,0,zr(0)],[x,Ym,zr(Ym)]);
+    }})(x)});
+  }
+  items.sort(function(a,b){return a.d-b.d});
+  items.forEach(function(it){s+=it.f()});
+  // ties
+  for(var i2=0;i2<c.nCol;i2++){var yy=y0+i2*c.spanH,zz=c.heights[i2]*0.6;s+=L('d-brace',[c.x0,yy,zz],[c.x0+(c.nRaf-1)*c.fs,yy,zz])}
+  // purlins
+  for(var r=0;r<c.rows;r++){
+    var base=S.rafterOvh+r*(c.dS+c.gap);
+    [0.2,0.8].forEach(function(f){var y=(base+c.dS*f)*c.ct;s+=L('d-pur',[0,y,zr(y)+40],[Xm,y,zr(y)+40])});
+  }
+  // walkway
+  if(S.walk.on==='1'&&c.nCol>=2){
+    var wl=Math.min(num(S.walk.len,0),Xm),yw=y0+c.spanH*0.5,zw=c.heights[0]*0.55+c.spanZ*0.5;
+    if(wl>0){var xa=(Xm-wl)/2;s+='<polygon class="d-walk" points="'+Q(xa,yw-250,zw)+' '+Q(xa+wl,yw-250,zw)+' '+Q(xa+wl,yw+250,zw)+' '+Q(xa,yw+250,zw)+'"/>'}
+  }
+  // modules
+  if(panels){
+    var quads=[];
+    for(var r3=0;r3<c.rows;r3++)for(var k=0;k<c.per;k++){
+      var xa2=(Xm-c.runLen)/2+k*(c.dP+c.gap),xb=xa2+c.dP;
+      var s1=S.rafterOvh+r3*(c.dS+c.gap),s2=s1+c.dS,ya=s1*c.ct,yb2=s2*c.ct;
+      quads.push({d:xa2+(Ym-ya),p:Q(xa2,ya,zr(ya)+110)+' '+Q(xb,ya,zr(ya)+110)+' '+Q(xb,yb2,zr(yb2)+110)+' '+Q(xa2,yb2,zr(yb2)+110)});
+    }
+    quads.sort(function(a,b){return a.d-b.d});
+    quads.forEach(function(q){s+='<polygon class="d-mod" points="'+q.p+'"/>'});
+  }
+  s+=titleBlock(c,W,H,panels?'3D with modules':'3D structure')+'</svg>';
+  return s;
+}
+
+/* ---------- tables ---------- */
+function tables(A){
+  var h='<table><thead><tr><th>Block</th><th>Member</th><th class="n">Qty</th><th class="n">Length (mm)</th><th class="n">Total (m)</th></tr></thead><tbody>';
+  A.cut.forEach(function(r){h+='<tr><td>'+esc(r.blk)+'</td><td>'+r.member+'</td><td class="n">'+r.qty+'</td><td class="n">'+fmt(r.len)+'</td><td class="n">'+f1(r.qty*r.len/1000)+'</td></tr>'});
+  if(A.wk){
+    h+='<tr><td>Walkway</td><td>Perforated walkway</td><td class="n">1</td><td class="n">'+fmt(A.wk.len)+'</td><td class="n">'+f1(A.wk.len/1000)+'</td></tr>';
+    h+='<tr><td>Walkway</td><td>U-support (500 wide, legs 595 / 697)</td><td class="n">'+A.wk.sup+'</td><td class="n">'+fmt(A.wk.supLen)+'</td><td class="n">'+f1(A.wk.sup*A.wk.supLen/1000)+'</td></tr>';
+  }
+  h+='</tbody></table>';
+  g('cutTbl').innerHTML=h;
+  var rows=bomRows(A);
+  var t='<table><thead><tr><th>Item</th><th>Specification</th><th class="n">Qty</th><th>Unit</th><th class="n">Weight (kg)</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    if(r.g){t+='<tr class="grp"><td colspan="5">'+r.g+'</td></tr>';return}
+    t+='<tr><td>'+r.item+'</td><td>'+esc(r.spec)+'</td><td class="n">'+r.qty+'</td><td>'+r.unit+'</td><td class="n">'+(r.kg?fmt(r.kg):'')+'</td></tr>';
+  });
+  t+='</tbody></table>';
+  g('bomTbl').innerHTML=t;
+  g('bomNote').textContent='Quantities are estimates from the inputs above. Pipe stock pieces include 5% cutting allowance. Clamp and bolt counts assume two purlins per module row. Check final sections, wind load and roof capacity with a structural engineer before fabrication.';
+}
+function bomRows(A){
+  var R=[],c=A.cat;
+  R.push({g:'Modules'});
+  R.push({item:'Solar module',spec:S.module.wp+' Wp, '+S.module.len+' x '+S.module.wid+' mm',qty:A.mods,unit:'pcs'});
+  R.push({g:'Steel structure'});
+  ['col','raf','pur','brc'].forEach(function(k){
+    R.push({item:c[k].name,spec:c[k].spec+' · '+fmt(c[k].pcs)+' cut pieces, '+f1(c[k].m)+' m',qty:c[k].stock,unit:'x '+(S.stock/1000)+' m pipes',kg:c[k].wt});
+  });
+  if(A.wk){
+    R.push({item:'Walkway grating',spec:'Perforated, '+fmt(A.wk.len)+' mm run',qty:1,unit:'set'});
+    R.push({item:'Walkway U-supports',spec:'500 wide, legs 595 / 697 mm',qty:A.wk.sup,unit:'pcs'});
+  }
+  R.push({g:'Foundation and fixings'});
+  R.push({item:'Concrete pedestals',spec:S.base.w+' x '+S.base.d+' x '+S.base.h+' mm · '+(Math.round(A.conc*100)/100)+' m³',qty:A.cols,unit:'pcs'});
+  R.push({item:'Base plates',spec:'With 4 anchor holes',qty:A.cols,unit:'pcs'});
+  R.push({item:'Anchor bolts',spec:'M12 chemical or cast-in',qty:A.cols*4,unit:'pcs'});
+  R.push({item:'Rafter-to-column bolts',spec:'M10 with nut and washers',qty:A.rj*2,unit:'sets'});
+  R.push({item:'Purlin-to-rafter clips',spec:'M8 with nut and washers',qty:A.pj*2,unit:'sets'});
+  R.push({item:'Mid clamps',spec:'Anodised aluminium',qty:A.mid,unit:'pcs'});
+  R.push({item:'End clamps',spec:'Anodised aluminium',qty:A.end,unit:'pcs'});
+  R.push({g:'Electrical (indicative)'});
+  R.push({item:'Inverter',spec:'About '+A.inv+' kW class, '+f1(A.kwp)+' kWp array',qty:1,unit:'set'});
+  R.push({item:'DCDB, ACDB, earthing, lightning arrestor',spec:'Sized with inverter',qty:1,unit:'set'});
+  R.push({item:'DC and AC cables, MC4 connectors',spec:'Length from site survey',qty:1,unit:'lot'});
+  return R;
+}
+function csv(A){
+  var o=['Project,'+(S.project.name||'')+','+(S.project.site||''),'','Cut list','Block,Member,Qty,Length mm'];
+  A.cut.forEach(function(r){o.push([r.blk,r.member,r.qty,Math.round(r.len)].join(','))});
+  if(A.wk){o.push('Walkway,Perforated walkway,1,'+A.wk.len);o.push('Walkway,U-support,'+A.wk.sup+','+A.wk.supLen)}
+  o.push('','Materials','Item,Specification,Qty,Unit,Weight kg');
+  bomRows(A).forEach(function(r){if(!r.g)o.push(['"'+r.item+'"','"'+r.spec+'"',r.qty,'"'+r.unit+'"',r.kg?Math.round(r.kg):''].join(','))});
+  return o.join('\n');
+}
+g('copyCsv').onclick=function(){
+  var txt=csv(calcAll()),msg=g('copyMsg'),box=g('copyFallback'),ta=g('copyArea');
+  function fallback(){box.hidden=false;ta.value=txt;ta.focus();ta.select();msg.textContent='Select and copy the text below.'}
+  try{navigator.clipboard.writeText(txt).then(function(){box.hidden=true;msg.textContent='Copied. Paste into Excel or Sheets.'},fallback)}catch(e){fallback()}
+};
+
+/* ---------- render ---------- */
+function render(){
+  var A=calcAll();
+  if(sel>=A.cs.length)sel=0;
+  var c=A.cs[sel];
+  g('hdrProject').textContent=[S.project.name,S.project.site].filter(Boolean).join(' · ');
+  var SUMH=
+    '<div><b>'+A.mods+'</b><span>Modules</span></div><div><b>'+f1(A.kwp)+' kWp</b><span>Array size</span></div>'+
+    '<div><b>'+fmt(A.area)+' m²</b><span>Module area</span></div><div><b>'+f1(A.steelKg/1000)+' t</b><span>Steel</span></div>'+
+    '<div><b>'+A.cols+'</b><span>Foundations</span></div><div><b>~'+A.inv+' kW</b><span>Inverter class</span></div>';
+  g('sum').innerHTML=SUMH;g('sum2').innerHTML=SUMH;
+  chips();
+  g('vStruct').setAttribute('aria-pressed',String(!showPanels));
+  g('vPanels').setAttribute('aria-pressed',String(showPanels));
+  g('isoSheet').innerHTML=iso(c,showPanels);
+  g('isoSheet').hidden=(view!=='iso');g('elevSheet').hidden=(view!=='elev');g('planSheet').hidden=(view!=='plan');g('planNote').hidden=(view!=='plan');
+  root.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===view?'true':'false')});
+  g('modChips').hidden=(view!=='iso');
+  g('elevSheet').innerHTML=elevation(c);
+  g('planSheet').innerHTML=plan(c);
+  tables(A);
+  LA=A;renderElec();buildProc();buildCons();buildDocs();
+}
+var LA=null;
+
+/* ===== EPC stages ===== */
+function slug(t){return String(t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function rs(n){return '₹ '+Math.round(n).toLocaleString('en-IN')}
+function copyOut(txt,btnMsg,boxId,areaId){
+  var msg=g(btnMsg),box=g(boxId),ta=g(areaId);
+  function fb(){box.hidden=false;ta.value=txt;ta.focus();ta.select();msg.textContent='Select and copy the text below.'}
+  try{navigator.clipboard.writeText(txt).then(function(){box.hidden=true;msg.textContent='Copied.'},fb)}catch(e){fb()}
+}
+/* stage switching */
+g('stages').addEventListener('click',function(e){
+  var st=e.target.closest&&e.target.closest('[data-st]');if(!st)return;st=st.getAttribute('data-st');
+  root.querySelectorAll('.stage').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-st')===st?'true':'false')});
+  ['eng','proc','cons'].forEach(function(k){g('st-'+k).hidden=(k!==st)});
+});
+/* generic data-x binding */
+var after={elec:function(){renderElec()},proc:function(){updateProc()},cons:function(){updateCons()},docs:function(){updateDocs()}};
+function onX(e){
+  var el=e.target,x=el.getAttribute&&el.getAttribute('data-x');if(!x)return;
+  var v=el.type==='checkbox'?el.checked:(el.type==='number'?num(el.value,0):el.value);
+  if(el.getAttribute('data-nullable')==='1'&&el.value==='')v=null;
+  setp(x,v);save();var h=el.getAttribute('data-after');if(h&&after[h])after[h]();
+}
+root.addEventListener('input',onX);root.addEventListener('change',onX);
+
+/* ----- project switcher ----- */
+function projs(){try{return JSON.parse(localStorage.getItem('gs_epc_projects_v1')||'{}')}catch(e){return {}}}
+function saveProjs(o){try{localStorage.setItem('gs_epc_projects_v1',JSON.stringify(o))}catch(e){}}
+function projOpts(){
+  var o=projs(),h='<option value="">Saved projects…</option>';
+  Object.keys(o).forEach(function(k){h+='<option value="'+esc(k)+'">'+esc(k)+'</option>'});
+  g('projSel').innerHTML=h;
+}
+g('saveProj').onclick=function(){var o=projs();o[S.project.name||'Untitled']=clone(S);saveProjs(o);projOpts();g('projSel').value=S.project.name||'Untitled'};
+g('newProj').onclick=function(){reload(BLANK)};
+g('projSel').onchange=function(e){var o=projs(),k=e.target.value;if(k&&o[k])reload(o[k])};
+
+/* ----- electrical ----- */
+function pick(list,v){for(var i=0;i<list.length;i++)if(list[i]>=v)return list[i];return list[list.length-1]}
+function renderElec(){
+  if(!LA)return;var A=LA,e=S.elec,N,rows=[];
+  var vocCold=e.voc*(1+e.tcVoc/100*(e.tmin-25));
+  var vmpHot=e.vmp*(1+e.tcPmax/100*(e.tmax-25));
+  var vmpCold=e.vmp*(1+e.tcPmax/100*(e.tmin-25));
+  var maxN=Math.max(1,Math.min(Math.floor(e.invVmax/vocCold),Math.floor(e.mpptMax/vmpCold)));
+  var minN=Math.max(1,Math.ceil(e.mpptMin/vmpHot));
+  N=e.perString>0?e.perString:maxN;
+  var strings=Math.ceil(A.mods/N),perM=Math.ceil(strings/Math.max(1,e.mppts));
+  var iM=perM*e.isc,vS=N*vmpHot;
+  var iDc=e.isc*1.25,dcA=2*e.cableLen*iDc*0.0225/(0.01*Math.max(1,vS));
+  var dcSz=pick([4,6,10,16,25,35],dcA);
+  var kw=A.inv,iAc=kw*1000/(1.732*415*0.99),brk=pick([16,20,25,32,40,50,63,80,100,125,160,200,250,315,400],iAc*1.25);
+  var tbl=[[30,4],[40,6],[55,10],[72,16],[95,25],[115,35],[140,50],[175,70],[210,95],[250,120],[285,150],[330,185],[380,240]],acSz=240;
+  for(var i=0;i<tbl.length;i++)if(tbl[i][0]>=brk){acSz=tbl[i][1];break}
+  var okN=N>=minN&&N<=maxN,okI=iM<=e.imax;
+  function pill(ok,t){return '<span class="pill '+(ok?'ok':'warn')+'">'+t+'</span>'}
+  rows.push(['Module Voc at '+e.tmin+' °C',f1(vocCold)+' V','']);
+  rows.push(['Module Vmp at '+e.tmax+' °C cell',f1(vmpHot)+' V','']);
+  rows.push(['Modules per string, allowed range',minN+' to '+maxN,'From MPPT window and inverter max DC volts']);
+  rows.push(['Modules per string, used',N,pill(okN,okN?'Within range':'Outside range')]);
+  rows.push(['Total strings',strings,A.mods%N?'Last string has '+(A.mods%N)+' modules. Rebalance or change string length.':'All strings equal']);
+  rows.push(['Strings per MPPT (worst)',perM,'Current '+f1(iM)+' A against limit '+e.imax+' A '+'']);
+  rows.push(['MPPT current check','',pill(okI,okI?'OK':'Over limit')]);
+  rows.push(['String voltage (Vmp hot)',f1(vS)+' V','']);
+  rows.push(['DC / AC ratio',(A.kwp/kw).toFixed(2),'Array '+f1(A.kwp)+' kWp, inverter about '+kw+' kW']);
+  rows.push(['DC string cable',dcSz+' mm² Cu','Design current '+f1(iDc)+' A, 1% drop over '+e.cableLen+' m']);
+  rows.push(['AC current',f1(iAc)+' A','Three-phase 415 V']);
+  rows.push(['AC breaker',brk+' A','']);
+  rows.push(['AC cable',acSz+' mm² Cu','Indicative, '+e.acLen+' m run']);
+  var h='<table><thead><tr><th>Item</th><th class="n">Value</th><th>Note</th></tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td>'+r[2]+'</td></tr>'});
+  g('elecOut').innerHTML=h+'</tbody></table>';
+}
+
+/* ----- documents ----- */
+var DOCS=['Layout and module arrangement','Structure drawing with dimensions','Foundation marking drawing','Single-line diagram','String and cable schedule','Roof load and structural stability check','Wind load calculation','Shadow analysis','Bill of materials','DISCOM net-metering application','Electrical inspector approval','Warranty and datasheet pack','As-built drawings'];
+function buildDocs(){
+  g('docsList').innerHTML=DOCS.map(function(d){var id='doc-'+slug(d);
+    return '<label><input type="checkbox" id="epc_'+id+'" data-x="docs.'+slug(d)+'" data-after="docs"'+(S.docs[slug(d)]?' checked':'')+'>'+d+'</label>'}).join('');
+  updateDocs();
+}
+function updateDocs(){var n=DOCS.filter(function(d){return S.docs[slug(d)]}).length;g('docsCount').textContent=n+' of '+DOCS.length+' documents ready';}
+
+/* ----- procurement ----- */
+var EXR={'solar-module':[13000],'concrete-pedestals':[1200],'base-plates':[450],'anchor-bolts':[60],'rafter-to-column-bolts':[25],'purlin-to-rafter-clips':[15],'mid-clamps':[45],'end-clamps':[55],'walkway-grating':[60000],'walkway-u-supports':[900],'inverter':[180000],'dcdb-acdb-earthing-lightning-arrestor':[60000],'dc-and-ac-cables-mc4-connectors':[90000]};
+var STAT=['To order','Quoted','Ordered','Received'];
+function procRows(){
+  return bomRows(LA).filter(function(r){return !r.g}).map(function(r){
+    var k=slug(r.item),it=S.proc.items[k]||{};
+    var ex=r.kg?85:(EXR[k]?EXR[k][0]:0);
+    var rate=it.rate!=null?it.rate:ex;
+    return {k:k,r:r,rate:rate,basis:r.kg?'kg':'unit',amt:(r.kg?r.kg:r.qty)*rate,vendor:it.vendor||'',status:it.status||'To order'};
+  });
+}
+function buildProc(){
+  if(!LA)return;
+  var vn=S.vendors.map(function(v){return v.name});
+  var h='<table><thead><tr><th>Item</th><th>Specification</th><th class="n">Qty</th><th class="n">Rate</th><th>Vendor</th><th>Status</th><th class="n">Amount</th></tr></thead><tbody>';
+  procRows().forEach(function(x){
+    var vo='<option value="">Select</option>'+vn.map(function(n){return '<option'+(n===x.vendor?' selected':'')+'>'+esc(n)+'</option>'}).join('');
+    var so=STAT.map(function(n){return '<option'+(n===x.status?' selected':'')+'>'+n+'</option>'}).join('');
+    var q=x.basis==='kg'?fmt(x.r.kg)+' kg':x.r.qty+' '+esc(x.r.unit);
+    h+='<tr><td>'+esc(x.r.item)+'</td><td style="white-space:normal;min-width:200px">'+esc(x.r.spec)+'</td><td class="n">'+q+'</td>'+
+      '<td class="n"><input id="epc_rate-'+x.k+'" type="number" min="0" data-x="proc.items.'+x.k+'.rate" data-after="proc" value="'+x.rate+'" aria-label="Rate per '+(x.basis==='kg'?'kg':'unit')+'"> <span class="tag">/'+(x.basis==='kg'?'kg':'unit')+'</span></td>'+
+      '<td><select id="epc_ven-'+x.k+'" data-x="proc.items.'+x.k+'.vendor" data-after="proc" aria-label="Vendor">'+vo+'</select></td>'+
+      '<td><select id="epc_sta-'+x.k+'" data-x="proc.items.'+x.k+'.status" data-after="proc" aria-label="Status">'+so+'</select></td>'+
+      '<td class="n" id="epc_amt-'+x.k+'">'+rs(x.amt)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  g('procTbl').innerHTML=h;
+  var v='<table><thead><tr><th>Vendor</th><th>Supplies</th><th>Contact</th><th>Lead time</th><th></th></tr></thead><tbody>';
+  S.vendors.forEach(function(o,i){
+    v+='<tr><td><input id="epc_vn'+i+'" data-x="vendors.'+i+'.name" data-after="vend" type="text" value="'+esc(o.name)+'" aria-label="Vendor name"></td>'+
+      '<td><input id="epc_vs'+i+'" data-x="vendors.'+i+'.supplies" type="text" value="'+esc(o.supplies)+'" aria-label="Supplies" style="min-width:220px"></td>'+
+      '<td><input id="epc_vc'+i+'" data-x="vendors.'+i+'.contact" type="text" value="'+esc(o.contact)+'" aria-label="Contact" placeholder="Phone or email"></td>'+
+      '<td><input id="epc_vl'+i+'" data-x="vendors.'+i+'.lead" type="text" value="'+esc(o.lead)+'" aria-label="Lead time"></td>'+
+      '<td><button class="btn x" type="button" data-vdel="'+i+'" aria-label="Remove vendor">×</button></td></tr>';
+  });
+  g('vendTbl').innerHTML=v+'</tbody></table>';
+  g('gst').value=S.proc.gst;
+  updateProc();
+}
+after.vend=function(){}; // vendor names refresh the selects on next rebuild
+function updateProc(){
+  if(!LA)return;var rows=procRows(),sub=0,st={};
+  rows.forEach(function(x){sub+=x.amt;st[x.status]=(st[x.status]||0)+1;var c=g('amt-'+x.k);if(c)c.textContent=rs(x.amt)});
+  var gst=sub*S.proc.gst/100,tot=sub+gst;
+  g('procSum').innerHTML=
+    '<div><b>'+rs(sub)+'</b><span>Before GST</span></div><div><b>'+rs(gst)+'</b><span>GST '+S.proc.gst+'%</span></div>'+
+    '<div><b>'+rs(tot)+'</b><span>Total</span></div><div><b>'+rs(tot/(LA.kwp*1000))+'</b><span>Per Wp</span></div>'+
+    '<div><b>'+((st['Ordered']||0)+(st['Received']||0))+' / '+rows.length+'</b><span>Items ordered</span></div>'+
+    '<div><b>'+(st['Received']||0)+' / '+rows.length+'</b><span>Items received</span></div>';
+}
+g('addVendor').onclick=function(){S.vendors.push({name:'New vendor',supplies:'',contact:'',lead:''});save();buildProc()};
+g('vendTbl').addEventListener('click',function(e){
+  var d=e.target.getAttribute&&e.target.getAttribute('data-vdel');
+  if(d!==null&&d!==undefined){S.vendors.splice(+d,1);save();buildProc()}
+});
+g('vendTbl').addEventListener('change',function(e){if(e.target.id&&e.target.id.indexOf('epc_vn')===0)buildProc()});
+g('copyRfq').onclick=function(){
+  var o=['Request for quotation','Project: '+(S.project.name||'')+(S.project.site?' · '+S.project.site:''),'Array: '+LA.mods+' modules, '+f1(LA.kwp)+' kWp','',];
+  procRows().forEach(function(x){o.push('- '+x.r.item+' ('+x.r.spec+'): '+(x.basis==='kg'?fmt(x.r.kg)+' kg':x.r.qty+' '+x.r.unit))});
+  o.push('','Please quote rate, GST, delivery time and payment terms.');
+  copyOut(o.join('\n'),'rfqMsg','rfqFallback','rfqArea');
+};
+
+/* ----- construction ----- */
+var TASKS=[['site','Site survey and handover of terrace'],['mark','Foundation marking and base drilling'],['cast','Pedestal casting'],['cure','Concrete curing'],['erect','Column and rafter erection'],['purl','Purlin, brace and walkway fitting'],['mods','Module installation'],['dc','DC cabling and earthing'],['inv','Inverter, DCDB, ACDB and AC wiring'],['test','Testing and DISCOM inspection'],['hand','Commissioning and handover']];
+var CHK=['Safety harness, edge protection and helmets on site','Terrace load and waterproofing checked','Foundation points marked from the drawing','Anchor bolts and base plates inspected','Concrete cube test and curing recorded','Column plumb and rafter slope checked at 5°','Torque check on structure bolts','Module serial numbers recorded','String Voc and polarity tested','Insulation resistance test done','Earthing resistance measured','Lightning arrestor installed','Inverter commissioned and data logged','Client walkthrough and training done'];
+function autoDur(A){var c=function(n,d,m){return Math.max(m||1,Math.ceil(n/d))};
+  return {site:1,mark:c(A.cols,10),cast:c(A.cols,20),cure:7,erect:c(A.cols,6),purl:c(A.mods,60)+1,mods:c(A.mods,40),dc:c(A.mods,60)+1,inv:2,test:2,hand:1}}
+function durOf(id,au){var t=S.cons.tasks[id];return t&&t.dur!=null?t.dur:au[id]}
+function fdate(ms){return new Date(ms).toLocaleDateString('en-GB',{timeZone:'UTC',day:'2-digit',month:'short',year:'numeric'})}
+function sched(){
+  var au=autoDur(LA),d=S.cons.start&&/^\d{4}-\d{2}-\d{2}$/.test(S.cons.start)?S.cons.start:todayISO;
+  var cur=Date.parse(d+'T00:00:00Z'),day=86400000,out=[],tot=0,k=0;
+  TASKS.forEach(function(t){var dur=Math.max(1,durOf(t[0],au));out.push({id:t[0],name:t[1],dur:dur,auto:au[t[0]],off:tot,s:cur,e:cur+(dur-1)*day,
+    status:(S.cons.tasks[t[0]]&&S.cons.tasks[t[0]].status)||'Not started'});cur+=dur*day;tot+=dur});
+  return {rows:out,total:tot};
+}
+var CST=['Not started','In progress','Done'];
+function buildCons(){
+  if(!LA)return;var sc=sched(),h='<table><thead><tr><th>Task</th><th class="n">Days</th><th>Start</th><th>Finish</th><th>Status</th></tr></thead><tbody>';
+  sc.rows.forEach(function(r){
+    var so=CST.map(function(n){return '<option'+(n===r.status?' selected':'')+'>'+n+'</option>'}).join('');
+    h+='<tr><td style="white-space:normal;min-width:240px">'+r.name+'</td>'+
+      '<td class="n"><input id="epc_dur-'+r.id+'" type="number" min="1" data-x="cons.tasks.'+r.id+'.dur" data-after="cons" value="'+r.dur+'" aria-label="Days for '+esc(r.name)+'"></td>'+
+      '<td id="epc_cs-'+r.id+'">'+fdate(r.s)+'</td><td id="epc_ce-'+r.id+'">'+fdate(r.e)+'</td>'+
+      '<td><select id="epc_st-'+r.id+'" data-x="cons.tasks.'+r.id+'.status" data-after="cons" aria-label="Status">'+so+'</select></td></tr>';
+  });
+  g('consTbl').innerHTML=h+'</tbody></table>';
+  g('siteChk').innerHTML=CHK.map(function(c){var k='c-'+slug(c);
+    return '<label><input type="checkbox" id="epc_'+k+'" data-x="cons.checks.'+slug(c)+'" data-after="cons"'+(S.cons.checks[slug(c)]?' checked':'')+'>'+c+'</label>'}).join('');
+  g('cstart').value=S.cons.start||todayISO;
+  g('siteNotes').value=S.cons.notes||'';
+  updateCons();
+}
+function updateCons(){
+  if(!LA)return;var sc=sched(),done=0,prog=0,nd=0;
+  sc.rows.forEach(function(r){
+    var a=g('cs-'+r.id),b=g('ce-'+r.id);if(a)a.textContent=fdate(r.s);if(b)b.textContent=fdate(r.e);
+    if(r.status==='Done'){done+=r.dur;nd++}else if(r.status==='In progress')prog+=r.dur*0.5;
+  });
+  var pct=Math.round((done+prog)/sc.total*100),chk=CHK.filter(function(c){return S.cons.checks[slug(c)]}).length;
+  var last=sc.rows[sc.rows.length-1];
+  g('consSum').innerHTML=
+    '<div><b>'+sc.total+' days</b><span>Total duration</span></div><div><b>'+fdate(last.e)+'</b><span>Finish date</span></div>'+
+    '<div><b>'+pct+'%</b><span>Work complete</span></div><div><b>'+nd+' / '+sc.rows.length+'</b><span>Tasks done</span></div>'+
+    '<div><b>'+chk+' / '+CHK.length+'</b><span>Checklist items</span></div>';
+  // gantt
+  var W=980,lw=250,rh=30,top=34,H=top+sc.rows.length*rh+16,x0=lw,sw=W-lw-30,u=sw/sc.total;
+  var gx='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Construction timeline">';
+  for(var d=0;d<=sc.total;d+=(sc.total>40?10:5)){var x=x0+d*u;gx+='<line class="g-grid" x1="'+x+'" y1="'+(top-6)+'" x2="'+x+'" y2="'+(H-10)+'"/><text class="d-sm" x="'+x+'" y="'+(top-12)+'" text-anchor="middle">Day '+d+'</text>'}
+  sc.rows.forEach(function(r,i){var y=top+i*rh,cl=r.status==='Done'?'g-done':(r.status==='In progress'?'g-prog':'g-todo');
+    gx+='<text class="g-lbl" x="12" y="'+(y+rh/2+4)+'">'+esc(r.name.length>30?r.name.slice(0,29)+'…':r.name)+'</text><rect class="'+cl+'" x="'+(x0+r.off*u)+'" y="'+(y+6)+'" width="'+Math.max(3,r.dur*u-1)+'" height="'+(rh-12)+'"/>'});
+  g('gantt').innerHTML=gx+'</svg>';
+}
+projOpts();bindInputs();
+
+bindInputs();renderBlocks();render();
 })();
 </script>
 </body></html>
