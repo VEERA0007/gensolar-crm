@@ -1,0 +1,120 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function me() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function hasProfile() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    function myRole() {
+      return hasProfile() ? me().role : '';
+    }
+    function myOrg() {
+      return hasProfile() && me().organizationId is string ? me().organizationId : '';
+    }
+
+    function isManager() {
+      return myRole() == 'manager' || myRole() == 'admin';
+    }
+    function isAdmin() {
+      return myRole() == 'admin';
+    }
+    function isRep() {
+      return myRole() == 'rep' || myRole() == 'representative';
+    }
+
+    match /users/{userId} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      // Admins can list users and review role requests.
+      allow read: if hasProfile() && isAdmin();
+      // Admins approve or decline role requests. The admin role itself is assigned only in the Firebase console.
+      allow update: if hasProfile() && isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['role', 'organizationId', 'requestedRole', 'approvedBy', 'approvedAt'])
+        && request.resource.data.role in ['customer', 'rep', 'manager']
+        && request.resource.data.get('organizationId', '') in ['', myOrg()];
+      // New accounts can create only their own customer profile.
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == userId
+        && (request.resource.data.role == 'customer'
+            || (exists(/databases/$(database)/documents/invites/$(request.auth.token.phone_number))
+                && get(/databases/$(database)/documents/invites/$(request.auth.token.phone_number)).data.role == request.resource.data.role
+                && get(/databases/$(database)/documents/invites/$(request.auth.token.phone_number)).data.organizationId == request.resource.data.organizationId));
+      // A person invited by an admin may take the role and organization in their invite (the app then deletes the invite).
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && exists(/databases/$(database)/documents/invites/$(request.auth.token.phone_number))
+        && get(/databases/$(database)/documents/invites/$(request.auth.token.phone_number)).data.role == request.resource.data.role
+        && get(/databases/$(database)/documents/invites/$(request.auth.token.phone_number)).data.organizationId == request.resource.data.organizationId;
+      // Users may edit their own basic profile, never their role or organization.
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.get('organizationId', '') == resource.data.get('organizationId', '')
+        && request.resource.data.get('requestedRole', 'customer') in ['admin','sales_head','regional_manager','sales_manager','sales_rep','channel_partner','customer'];
+      allow delete: if false;
+    }
+
+    // Invitations created by admins for people who have not signed in yet. The document id is the phone number, e.g. +919876543210.
+    match /invites/{phoneId} {
+      allow read: if signedIn() && (phoneId == request.auth.token.phone_number || (hasProfile() && isAdmin()));
+      allow create, update: if hasProfile() && isAdmin()
+        && request.resource.data.role in ['rep', 'manager']
+        && request.resource.data.organizationId == myOrg();
+      allow delete: if signedIn() && (phoneId == request.auth.token.phone_number || (hasProfile() && isAdmin()));
+    }
+
+    match /leads/{leadId} {
+      function sameOrg() {
+        return hasProfile()
+          && isManager()
+          && resource.data.organizationId == myOrg();
+      }
+      allow read: if signedIn() && (
+        resource.data.ownerUid == request.auth.uid
+        || resource.data.assignedRepUid == request.auth.uid
+        || sameOrg()
+      );
+      allow create: if hasProfile() && (
+        (myRole() == 'customer'
+          && request.resource.data.ownerUid == request.auth.uid)
+        || (isRep()
+          && request.resource.data.assignedRepUid == request.auth.uid
+          && request.resource.data.organizationId == myOrg())
+        || (isManager()
+          && request.resource.data.organizationId == myOrg())
+      );
+      allow update: if hasProfile() && (
+        (isManager()
+          && resource.data.organizationId == myOrg()
+          && request.resource.data.organizationId == resource.data.organizationId)
+        || (isRep()
+          && resource.data.assignedRepUid == request.auth.uid
+          && request.resource.data.assignedRepUid == resource.data.assignedRepUid
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.ownerUid == resource.data.ownerUid)
+        || (myRole() == 'customer'
+          && resource.data.ownerUid == request.auth.uid
+          && request.resource.data.ownerUid == resource.data.ownerUid
+          && request.resource.data.assignedRepUid == resource.data.assignedRepUid
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.status == resource.data.status)
+      );
+      allow delete: if hasProfile() && (
+        (isManager() && resource.data.organizationId == myOrg())
+        || (isRep() && resource.data.assignedRepUid == request.auth.uid)
+        || (myRole() == 'customer' && resource.data.ownerUid == request.auth.uid)
+      );
+    }
+
+    // Other collections are denied until their data model and access rules are implemented.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
