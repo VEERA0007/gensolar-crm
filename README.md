@@ -69,6 +69,7 @@ Managers and admins get a **Team** tab listing role requests. Approve gives `rep
 
 ## Version 1.4: CRM and manager dashboard
 - New Dashboard tab, visible only to Manager and Admin accounts: sales target progress (default ₹1 crore, editable), open pipeline, win rate, pipeline by stage, follow-ups due, team, dealer and lead-source performance.
+- Dealer commission: default rate, per-dealer rate, commission earned on Won leads, amount paid and balance due, with a shareable statement (saved on the phone).
 - Leads now carry an optional dealer and a next follow-up date. These sync to the cloud with each lead.
 - Access is enforced by the existing Firestore rules: representatives only load leads assigned to them, so the figures a manager sees come from the whole organization and a representative's never do.
 - The sales target is saved on the phone only.

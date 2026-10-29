@@ -421,9 +421,12 @@ html,body{margin:0;height:100%;background:#fff}
       <div class="card"><h3>Pipeline by stage</h3><div id="crmFunnel"></div></div>
       <div class="card"><h3>Follow-ups due</h3><div id="crmFollow"></div></div>
       <div class="card"><h3>Team performance</h3><div class="chartbox" id="crmTeam"></div></div>
-      <div class="card"><h3>Dealer performance</h3><div class="chartbox" id="crmDealer"></div></div>
+      <div class="card"><h3>Dealer performance and commission</h3>
+        <div class="row"><div class="field"><label for="dlDefault">Default commission (% of won value)</label><input id="dlDefault" type="number" min="0" max="100" step="0.1" inputmode="decimal"></div><div class="field"><label for="dlCsv">&nbsp;</label><button class="btn alt" id="dlCsv" type="button">Share commission statement</button></div></div>
+        <div class="chartbox" id="crmDealer" style="margin-top:10px"></div>
+        <p class="meta">Commission is earned only on leads marked Won, on the amount the customer pays. Set a rate per dealer to override the default, and enter what you have already paid to see the balance due.</p></div>
       <div class="card"><h3>Lead sources</h3><div class="chartbox" id="crmSource"></div></div>
-      <p class="fine">Figures come from the leads you can see on this phone, synced from the company cloud. The target is saved on this phone only.</p>
+      <p class="fine">Figures come from the leads you can see on this phone, synced from the company cloud. The target and dealer commission settings are saved on this phone only.</p>
     </section>
     <section id="view-profile" class="page" hidden>
       <h1>Profile</h1>
@@ -1046,9 +1049,48 @@ function model(p){
       return '<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:6px 0;border-top:1px solid var(--line);font-size:13px"><span><b>'+esc(l.name||'Unnamed')+'</b> · '+esc(l.status)+'</span><span style="color:'+(od?'var(--bad)':'var(--muted)')+'">'+(od?'Overdue · ':'')+esc(l.nextFollow)+'</span></div>';
     }).join(''):'<p class="meta">No follow-ups due. Set a follow-up date on a lead to see it here.</p>';
     $('crmTeam').innerHTML=crmTable(groupRows(all,function(l){return l.owner?'+91 '+l.owner:''},'Unassigned'),'Salesperson');
-    $('crmDealer').innerHTML=crmTable(groupRows(all.filter(function(l){return l.dealer}),function(l){return l.dealer},'No dealer'),'Dealer');
+    renderDealers(all);
     $('crmSource').innerHTML=crmTable(groupRows(all,function(l){return l.source},'Unknown'),'Source');
   }
+  /* ---------- dealer commission ---------- */
+  function dlRates(){return lsGet('gs_dealer_comm_v1',{def:3,dealers:{}})}
+  function dlRows(all){
+    var c=dlRates(),rows=groupRows(all.filter(function(l){return l.dealer}),function(l){return l.dealer},'');
+    return rows.map(function(g){
+      var d=c.dealers[g.k]||{},rate=(d.rate===''||d.rate==null)?c.def:Number(d.rate),paid=Number(d.paid)||0,comm=g.val*rate/100;
+      return {name:g.k,n:g.n,won:g.won,val:g.val,rate:rate,custom:!(d.rate===''||d.rate==null),comm:comm,paid:paid,due:comm-paid};
+    });
+  }
+  function renderDealers(all){
+    var c=dlRates();$('dlDefault').value=c.def;
+    var rows=dlRows(all);
+    if(!rows.length){$('crmDealer').innerHTML='<p class="meta">No dealer leads yet. Add a dealer name when you add a contact.</p>';return}
+    var th='padding:6px 8px;text-align:right',td='padding:6px 8px;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums';
+    var tot=rows.reduce(function(t,r){t.comm+=r.comm;t.paid+=r.paid;t.due+=r.due;return t},{comm:0,paid:0,due:0});
+    $('crmDealer').innerHTML='<table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr><th style="'+th+';text-align:left">Dealer</th><th style="'+th+'">Leads</th><th style="'+th+'">Won</th><th style="'+th+'">Won value</th><th style="'+th+'">Rate %</th><th style="'+th+'">Commission</th><th style="'+th+'">Paid (₹)</th><th style="'+th+'">Due</th></tr></thead><tbody>'+
+      rows.map(function(r){var k=esc(r.name);return '<tr><td style="'+td+';text-align:left">'+k+'</td><td style="'+td+'">'+r.n+'</td><td style="'+td+'">'+r.won+'</td><td style="'+td+'">'+crmInr(r.val)+'</td>'+
+        '<td style="'+td+'"><input type="number" min="0" max="100" step="0.1" data-dl="rate" data-k="'+k+'" aria-label="Commission percent for '+k+'" placeholder="'+dlRates().def+'" value="'+(r.custom?r.rate:'')+'" style="width:64px"></td>'+
+        '<td style="'+td+'">'+crmInr(r.comm)+'</td>'+
+        '<td style="'+td+'"><input type="number" min="0" step="1" data-dl="paid" data-k="'+k+'" aria-label="Amount paid to '+k+'" value="'+(r.paid||'')+'" style="width:92px"></td>'+
+        '<td style="'+td+';color:'+(r.due>0?'var(--bad)':'var(--good)')+'">'+crmInr(r.due)+'</td></tr>'}).join('')+
+      '</tbody><tfoot><tr><td style="'+td+';text-align:left" colspan="5"><b>Total</b></td><td style="'+td+'"><b>'+crmInr(tot.comm)+'</b></td><td style="'+td+'"><b>'+crmInr(tot.paid)+'</b></td><td style="'+td+'"><b>'+crmInr(tot.due)+'</b></td></tr></tfoot></table>';
+  }
+  $('crmDealer').addEventListener('change',function(e){
+    var t=e.target,w=t.getAttribute('data-dl');if(!w)return;
+    var c=dlRates(),k=t.getAttribute('data-k'),d=c.dealers[k]||(c.dealers[k]={});
+    if(w==='rate'){d.rate=t.value===''?'':Math.max(0,Math.min(100,Number(t.value)||0))}
+    else d.paid=Math.max(0,Number(t.value)||0);
+    lsSet('gs_dealer_comm_v1',c);renderCrm();toast('Saved on this phone');
+  });
+  $('dlDefault').addEventListener('change',function(){
+    var c=dlRates();c.def=Math.max(0,Math.min(100,Number($('dlDefault').value)||0));lsSet('gs_dealer_comm_v1',c);renderCrm();toast('Default commission saved');
+  });
+  $('dlCsv').addEventListener('click',function(){
+    var rows=[['Dealer','Leads','Won','Won value','Rate %','Commission','Paid','Due']];
+    dlRows(leads()).forEach(function(r){rows.push([r.name,r.n,r.won,Math.round(r.val),r.rate,Math.round(r.comm),r.paid,Math.round(r.due)])});
+    shareText(rows.map(function(r){return r.map(function(c){c=String(c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(',')}).join('\n'));
+  });
+
   $('crmTargetBtn').addEventListener('click',function(){
     var v=Number($('crmTarget').value);if(!(v>0)){toast('Enter a target above zero');return}
     lsSet('gs_crm_target_v1',v);renderCrm();toast('Target saved on this phone');
