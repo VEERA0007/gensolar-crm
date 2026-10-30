@@ -253,6 +253,7 @@
       catch(e){tinyToast('Sharing is not available in this browser')}
     },
     openUrl:function(url){window.open(url,'_blank','noopener')},
-    printPdf:function(){window.print()}
+    printPdf:function(){window.print()},
+    printPdfLandscape:function(){window.print()}
   };
 })();
