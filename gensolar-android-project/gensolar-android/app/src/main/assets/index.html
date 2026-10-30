@@ -293,7 +293,7 @@ html,body{margin:0;height:100%;background:#fff}
 .epsvg .d-found{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.2}
 .epsvg{--steel:var(--muted)}
 .epsvg .d-cell{stroke:#8FA3F0;stroke-opacity:.55;stroke-width:.7;fill:none}
-.epsvg .d-frame{fill:none;stroke:#CDD6EA;stroke-width:1.1}
+.epsvg .d-frame{fill:none;stroke:#8A93A3;stroke-width:1.1}
 .epsvg .d-mod-l{fill:none;stroke:var(--module-edge);stroke-width:1.2;stroke-dasharray:4 3}
 .epsvg .d-walk{fill:var(--solar);stroke:var(--ink);stroke-width:.8}
 .epsvg .d-slab{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
@@ -686,8 +686,10 @@ html,body{margin:0;height:100%;background:#fff}
       <label>Length (mm)<input data-k="module.len" type="number" min="500" step="1"></label>
       <label>Width (mm)<input data-k="module.wid" type="number" min="500" step="1"></label>
       <label>Gap between modules (mm)<input data-k="gap" type="number" min="0" step="1"></label>
+      <label>Panel look<select data-k="module.look"><option value="black">Black</option><option value="blue">Blue</option></select></label>
     </div>
-  </details>
+  <div class="ep-sheet" id="epc_modPrev" style="margin-top:10px;max-width:220px"></div>
+            </details>
 
   <details class="ep-grp" open><summary>Array blocks</summary>
     <div class="blocks" id="epc_blocks"></div>
@@ -1736,12 +1738,12 @@ function clone(o){return JSON.parse(JSON.stringify(o))}
 function fill(o,d){Object.keys(d).forEach(function(k){
   if(o[k]===undefined)o[k]=clone(d[k]);
   else if(d[k]&&typeof d[k]==='object'&&!Array.isArray(d[k])&&o[k]&&typeof o[k]==='object')fill(o[k],d[k]);});return o}
-fill(REF,EXTRA);fill(BLANK,EXTRA);
+fill(REF,EXTRA);fill(BLANK,EXTRA);REF.module.look='black';BLANK.module.look='black';
 
 var S=null;
 try{var raw=localStorage.getItem(KEY);if(raw)S=JSON.parse(raw)}catch(e){}
 if(!S||!S.blocks||!S.module)S=JSON.parse(JSON.stringify(REF));
-fill(S,EXTRA);
+fill(S,EXTRA);if(!S.module.look)S.module.look='black';
 var sel=0,tab='site',showPanels=true,view='iso';
 
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -1841,7 +1843,7 @@ g('addBlock').onclick=function(){
   var n=S.blocks.length+1;S.blocks.push({name:'Block '+n,rows:2,perRow:10,low:S.blocks[0]?S.blocks[0].low:1200});
   sel=S.blocks.length-1;save();renderBlocks();render();
 };
-function reload(o){S=JSON.parse(JSON.stringify(o));fill(S,EXTRA);sel=0;save();bindInputs();renderBlocks();render()}
+function reload(o){S=JSON.parse(JSON.stringify(o));fill(S,EXTRA);if(!S.module.look)S.module.look='black';sel=0;save();bindInputs();renderBlocks();render()}
 g('loadRef').onclick=function(){reload(REF)};
 
 /* ---------- tabs ---------- */
@@ -1882,20 +1884,39 @@ function titleBlock(c,W,H,view){
 
 /* ---------- realistic modules ---------- */
 var gSeq=0,curG='';
+function isBlack(){return S.module.look!=='blue'}
 function svgOpen(W,H,label){
   curG='epcpg'+(++gSeq);
+  var st=isBlack()?'<stop offset="0" stop-color="#232833"/><stop offset=".5" stop-color="#07090D"/><stop offset="1" stop-color="#171B25"/>'
+                  :'<stop offset="0" stop-color="#3550B8"/><stop offset=".5" stop-color="#1F2F86"/><stop offset="1" stop-color="#2B3F9E"/>';
   return '<svg viewBox="0 0 '+W+' '+H+'" class="epsvg" role="img" aria-label="'+label+'"><defs>'+
-    '<linearGradient id="'+curG+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3550B8"/><stop offset=".5" stop-color="#1F2F86"/><stop offset="1" stop-color="#2B3F9E"/></linearGradient>'+
-    '<linearGradient id="'+curG+'s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>';
+    '<linearGradient id="'+curG+'" x1="0" y1="0" x2="1" y2="1">'+st+'</linearGradient>'+
+    '<linearGradient id="'+curG+'s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="'+(isBlack()?'.30':'.22')+'"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity="'+(isBlack()?'.07':'.04')+'"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>';
 }
 function cells(c){return c.dP>=c.dS?[12,6]:[6,12]}
 function modSvg(A,B,C,D,nAcross,nAlong,alpha){
   function lerp(p,q,t){return [p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t]}
   function f(p){return p[0].toFixed(1)+' '+p[1].toFixed(1)}
-  var pts=[A,B,C,D].map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' '),d='',i;
-  for(i=1;i<nAlong;i++)d+='M'+f(lerp(A,D,i/nAlong))+'L'+f(lerp(B,C,i/nAlong));
-  for(i=1;i<nAcross;i++)d+='M'+f(lerp(A,B,i/nAcross))+'L'+f(lerp(D,C,i/nAcross));
-  return '<g'+(alpha<1?' opacity="'+alpha+'"':'')+'><polygon style="fill:url(#'+curG+')" points="'+pts+'"/><path class="d-cell" d="'+d+'"/><polygon style="fill:url(#'+curG+'s)" points="'+pts+'"/><polygon class="d-frame" points="'+pts+'"/></g>';
+  var blk=isBlack();
+  var pts=[A,B,C,D].map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' '),grid='',bus='',i,k;
+  for(i=1;i<nAlong;i++)grid+='M'+f(lerp(A,D,i/nAlong))+'L'+f(lerp(B,C,i/nAlong));
+  for(i=1;i<nAcross;i++)grid+='M'+f(lerp(A,B,i/nAcross))+'L'+f(lerp(D,C,i/nAcross));
+  // thin busbars inside each cell column, as on a real half-cut module
+  for(i=0;i<nAcross;i++)for(k=1;k<=2;k++){var t=(i+k/3)/nAcross;bus+='M'+f(lerp(A,B,t))+'L'+f(lerp(D,C,t))}
+  var split='M'+f(lerp(A,D,.5))+'L'+f(lerp(B,C,.5));
+  var gc=blk?'#3A4150':'#8FA3F0',go=blk?'.9':'.55',bc=blk?'#B4BCCB':'#C9D3FF',bo=blk?'.38':'.28',fc=blk?'#8A93A3':'#CDD6EA';
+  return '<g'+(alpha<1?' opacity="'+alpha+'"':'')+'><polygon style="fill:url(#'+curG+')" points="'+pts+'"/>'+
+    '<path d="'+bus+'" fill="none" stroke="'+bc+'" stroke-opacity="'+bo+'" stroke-width=".35"/>'+
+    '<path d="'+grid+'" fill="none" stroke="'+gc+'" stroke-opacity="'+go+'" stroke-width=".6"/>'+
+    '<path d="'+split+'" fill="none" stroke="'+(blk?'#5B6475':'#6F86E6')+'" stroke-width="1.1"/>'+
+    '<polygon style="fill:url(#'+curG+'s)" points="'+pts+'"/><polygon fill="none" stroke="'+fc+'" stroke-width="1.3" points="'+pts+'"/></g>';
+}
+function renderPanelPreview(){
+  var el=g('modPrev');if(!el)return;
+  var h=svgOpen(170,120,'Panel preview');
+  h+=modSvg([30,8],[100,8],[100,112],[30,112],6,12,1);
+  h+='<text class="d-sm" x="112" y="62">'+(isBlack()?'Black':'Blue')+'</text><text class="d-sm" x="112" y="78">72 cells</text>';
+  el.innerHTML=h+'</svg>';
 }
 
 /* ---------- elevation ---------- */
@@ -2116,7 +2137,7 @@ function render(){
   g('elevSheet').innerHTML=elevation(c);
   g('planSheet').innerHTML=plan(c);
   tables(A);
-  LA=A;renderElec();buildProc();buildCons();buildDocs();
+  LA=A;renderPanelPreview();renderElec();buildProc();buildCons();buildDocs();
 }
 var LA=null;
 

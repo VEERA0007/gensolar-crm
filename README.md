@@ -95,7 +95,7 @@ One-time setup:
 
 The website is at `https://veera0007.github.io/gensolar-crm/`. To test locally: `node web/build-web.mjs`, then serve `web/dist` and open it. `node tests/web-shim-smoke.mjs` checks the website build against an in-memory stand-in for Firebase.
 
-## v1.9.6: EPC drawings
+## v1.9.7: EPC drawings
 
 - Modules in the 3D view and plan are drawn as real panels: navy blue shades, cell grid and silver frame.
 - Tap any drawing to open it full screen. Zoom with + and −, scroll to pan.
