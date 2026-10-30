@@ -94,3 +94,9 @@ One-time setup:
 3. If phone sign-in on the website reports an API key or app error, add a Web app in Firebase (Project settings, Your apps) and paste its `apiKey` and `appId` into `web/firebase-config.js`.
 
 The website is at `https://veera0007.github.io/gensolar-crm/`. To test locally: `node web/build-web.mjs`, then serve `web/dist` and open it. `node tests/web-shim-smoke.mjs` checks the website build against an in-memory stand-in for Firebase.
+
+## v1.9.6: EPC drawings
+
+- Modules in the 3D view and plan are drawn as real panels: navy blue shades, cell grid and silver frame.
+- Tap any drawing to open it full screen. Zoom with + and −, scroll to pan.
+- **Download PDF** in the full-screen view saves that drawing. **Download PDF (all blocks)** on the Drawings tab saves every block: 3D with modules, 3D structure only, side elevation, plan with foundation marking and member lengths, followed by a materials sheet. On Android it opens the print window, where you choose Save as PDF (landscape A4). In a browser it uses the browser's print dialog.

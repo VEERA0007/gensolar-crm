@@ -199,6 +199,19 @@ html,body{margin:0;height:100%;background:#fff}
 #updateBar button{border:0;border-radius:10px;padding:8px 14px;font:700 14px inherit;font-family:inherit;cursor:pointer}
 #updateNow{background:#f5c800;color:#10261f}#updateLater{background:transparent;color:#fff;padding:8px}
 
+@page epcland{size:A4 landscape;margin:8mm}
+@media print{
+  #printSheet{--ink:#12202C;--muted:#586979;--line:#D8E0E8;--surface-2:#EEF2F6;--solar:#F2A900;--bg:#fff;--surface:#fff}
+  #printSheet .ep-page{page:epcland;break-after:page;display:flex;flex-direction:column;gap:6px;height:188mm}
+  #printSheet .ep-page:last-child{break-after:auto}
+  #printSheet .ep-ph{display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid #12202C;padding-bottom:4px;font:600 12px system-ui,sans-serif}
+  #printSheet .ep-pb{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #printSheet .ep-pb svg{width:100%;height:auto;max-height:100%}
+  #printSheet .ep-pb .ep-memb{width:100%;align-self:flex-start}
+  #printSheet .ep-memb td,#printSheet .ep-memb th{text-align:left}
+  #printSheet .ep-pf{font:10px system-ui,sans-serif;color:#586979}
+  #printSheet svg,#printSheet svg *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 /* ===== EPC tab ===== */
 #epcRoot{--fg:var(--ink);--accent:var(--deep);--accent-fg:var(--on-deep);--amber:var(--solar);--ok:var(--good);--soft:var(--surface-2);--steel:var(--muted);--module:#3949AB;--module-edge:#B5C0F0;
   display:flex;flex-direction:column;gap:14px;min-width:0;font:14px/1.45 var(--font-body)}
@@ -241,7 +254,13 @@ html,body{margin:0;height:100%;background:#fff}
 #epcRoot .ep-chip{font:500 12px var(--font-mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 10px;cursor:pointer;border-radius:8px}
 #epcRoot .ep-chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #epcRoot .ep-sheet{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow-x:auto;margin-top:8px}
-#epcRoot .ep-sheet svg{display:block;min-width:620px;width:100%;height:auto}
+#epcRoot .ep-sheet svg{display:block;min-width:620px;width:100%;height:auto;cursor:zoom-in}
+#epcRoot .ep-lb{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#epcRoot .ep-lb-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface)}
+#epcRoot .ep-lb-bar b{font:700 15px var(--font-display);min-width:0}
+#epcRoot .ep-lb-bar div{display:flex;gap:6px;flex-wrap:wrap}
+#epcRoot .ep-lb-body{flex:1;overflow:auto;background:var(--surface);-webkit-overflow-scrolling:touch;padding-bottom:env(safe-area-inset-bottom,0px)}
+#epcRoot .ep-lb-body svg{display:block;width:var(--lbw,1200px);max-width:none;height:auto;margin:0 auto}
 #epcRoot .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:12px}
 #epcRoot table{border-collapse:collapse;width:100%;font-size:13px}
 #epcRoot th,#epcRoot td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -263,19 +282,21 @@ html,body{margin:0;height:100%;background:#fff}
 #epcRoot .pill.warn{color:var(--warn);border-color:var(--warn)}
 #epcRoot .copybox{height:120px;font:12px var(--font-mono)}
 #epcRoot .tag{font:500 10.5px var(--font-mono);color:var(--muted)}
-#epcRoot .d-line{stroke:var(--muted);stroke-width:1;fill:none}
-#epcRoot .d-txt{fill:var(--ink);font:500 12px var(--font-mono)}
-#epcRoot .d-sm{fill:var(--muted);font:500 11px var(--font-mono)}
-#epcRoot .d-ground{stroke:var(--ink);stroke-width:2;fill:none}
-#epcRoot .d-col{stroke:var(--steel);stroke-width:4;fill:none;stroke-linecap:round}
-#epcRoot .d-raf{stroke:var(--steel);stroke-width:5;fill:none;stroke-linecap:round}
-#epcRoot .d-pur{stroke:var(--steel);stroke-width:2.2;fill:none}
-#epcRoot .d-brace{stroke:var(--steel);stroke-width:2;fill:none}
-#epcRoot .d-found{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.2}
-#epcRoot .d-mod{fill:var(--module);stroke:var(--module-edge);stroke-width:1;fill-opacity:.9}
-#epcRoot .d-mod-l{fill:none;stroke:var(--module-edge);stroke-width:1.2;stroke-dasharray:4 3}
-#epcRoot .d-walk{fill:var(--solar);stroke:var(--ink);stroke-width:.8}
-#epcRoot .d-slab{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
+.epsvg .d-line{stroke:var(--muted);stroke-width:1;fill:none}
+.epsvg .d-txt{fill:var(--ink);font:500 12px var(--font-mono)}
+.epsvg .d-sm{fill:var(--muted);font:500 11px var(--font-mono)}
+.epsvg .d-ground{stroke:var(--ink);stroke-width:2;fill:none}
+.epsvg .d-col{stroke:var(--steel);stroke-width:4;fill:none;stroke-linecap:round}
+.epsvg .d-raf{stroke:var(--steel);stroke-width:5;fill:none;stroke-linecap:round}
+.epsvg .d-pur{stroke:var(--steel);stroke-width:2.2;fill:none}
+.epsvg .d-brace{stroke:var(--steel);stroke-width:2;fill:none}
+.epsvg .d-found{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.2}
+.epsvg{--steel:var(--muted)}
+.epsvg .d-cell{stroke:#8FA3F0;stroke-opacity:.55;stroke-width:.7;fill:none}
+.epsvg .d-frame{fill:none;stroke:#CDD6EA;stroke-width:1.1}
+.epsvg .d-mod-l{fill:none;stroke:var(--module-edge);stroke-width:1.2;stroke-dasharray:4 3}
+.epsvg .d-walk{fill:var(--solar);stroke:var(--ink);stroke-width:.8}
+.epsvg .d-slab{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
 #epcRoot .g-todo{fill:var(--deep);opacity:.55}
 #epcRoot .g-prog{fill:var(--solar)}
 #epcRoot .g-done{fill:var(--good)}
@@ -546,6 +567,12 @@ html,body{margin:0;height:100%;background:#fff}
       <h1>EPC</h1>
       <p class="lede">Engineering, Procurement and Construction for each project, in one place.</p>
       <div id="epcRoot">
+        <div class="ep-lb" id="epc_lb" hidden role="dialog" aria-modal="true" aria-label="Drawing">
+          <div class="ep-lb-bar"><b id="epc_lbTitle">Drawing</b>
+            <div><button class="btn alt sm" id="epc_lbMinus" type="button" aria-label="Zoom out">−</button><button class="btn alt sm" id="epc_lbPlus" type="button" aria-label="Zoom in">+</button>
+            <button class="btn sm" id="epc_lbPdf" type="button">Download PDF</button><button class="btn alt sm" id="epc_lbClose" type="button">Close</button></div></div>
+          <div class="ep-lb-body" id="epc_lbBody"></div>
+        </div>
         <div class="ep-bar">
           <select id="epc_projSel" aria-label="Saved EPC projects"></select>
           <button class="btn alt sm" id="epc_saveProj" type="button">Save project</button>
@@ -721,6 +748,7 @@ html,body{margin:0;height:100%;background:#fff}
               <button class="ep-chip" data-v="elev" aria-pressed="false">Side elevation</button>
               <button class="ep-chip" data-v="plan" aria-pressed="false">Plan and marking</button></div>
               <div class="ep-chips" id="epc_modChips"><button class="ep-chip" id="epc_vStruct" aria-pressed="false">Structure only</button><button class="ep-chip" id="epc_vPanels" aria-pressed="true">With modules</button></div></div>
+            <div class="ep-bar"><button class="btn sm" id="epc_pdfAll" type="button">Download PDF (all blocks)</button><span class="ep-note" style="margin:0">Tap a drawing to enlarge it.</span></div>
             <div class="ep-sheet" id="epc_isoSheet"></div>
             <div class="ep-sheet" id="epc_elevSheet" hidden></div>
             <div class="ep-sheet" id="epc_planSheet" hidden></div>
@@ -1845,11 +1873,29 @@ function dim(x1,y1,x2,y2,label,off,side){
     '<line class="d-line" x1="'+(a[0]-4)+'" y1="'+(a[1]+4)+'" x2="'+(a[0]+4)+'" y2="'+(a[1]-4)+'"/><line class="d-line" x1="'+(b[0]-4)+'" y1="'+(b[1]+4)+'" x2="'+(b[0]+4)+'" y2="'+(b[1]-4)+'"/>';
   var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
   if(Math.abs(dx)>=Math.abs(dy))s+='<text class="d-txt" x="'+mx+'" y="'+(ny<0?my-6:my+16)+'" text-anchor="middle">'+label+'</text>';
-  else s+='<text class="d-txt" x="'+(nx<0?mx-6:mx+6)+'" y="'+my+'" text-anchor="'+(nx<0?'end':'start')+'" dominant-baseline="middle">'+label+'</text>';
+  else{var tx=nx<0?mx-6:mx+14;s+='<text class="d-txt" transform="rotate(-90 '+tx+' '+my+')" x="'+tx+'" y="'+my+'" text-anchor="middle">'+label+'</text>'}
   return s;
 }
 function titleBlock(c,W,H,view){
   return '<text class="d-sm" x="16" y="'+(H-12)+'">'+esc(S.project.name||'')+' · '+esc(c.b.name||'')+' · '+view+' · '+c.mods+' modules · tilt '+S.tilt+'° · dimensions in mm</text>';
+}
+
+/* ---------- realistic modules ---------- */
+var gSeq=0,curG='';
+function svgOpen(W,H,label){
+  curG='epcpg'+(++gSeq);
+  return '<svg viewBox="0 0 '+W+' '+H+'" class="epsvg" role="img" aria-label="'+label+'"><defs>'+
+    '<linearGradient id="'+curG+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3550B8"/><stop offset=".5" stop-color="#1F2F86"/><stop offset="1" stop-color="#2B3F9E"/></linearGradient>'+
+    '<linearGradient id="'+curG+'s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>';
+}
+function cells(c){return c.dP>=c.dS?[12,6]:[6,12]}
+function modSvg(A,B,C,D,nAcross,nAlong,alpha){
+  function lerp(p,q,t){return [p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t]}
+  function f(p){return p[0].toFixed(1)+' '+p[1].toFixed(1)}
+  var pts=[A,B,C,D].map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' '),d='',i;
+  for(i=1;i<nAlong;i++)d+='M'+f(lerp(A,D,i/nAlong))+'L'+f(lerp(B,C,i/nAlong));
+  for(i=1;i<nAcross;i++)d+='M'+f(lerp(A,B,i/nAcross))+'L'+f(lerp(D,C,i/nAcross));
+  return '<g'+(alpha<1?' opacity="'+alpha+'"':'')+'><polygon style="fill:url(#'+curG+')" points="'+pts+'"/><path class="d-cell" d="'+d+'"/><polygon style="fill:url(#'+curG+'s)" points="'+pts+'"/><polygon class="d-frame" points="'+pts+'"/></g>';
 }
 
 /* ---------- elevation ---------- */
@@ -1860,14 +1906,14 @@ function elevation(c){
   var zmax=zE+250,sc=Math.min((W-pl-pr)/hExt,(H-pt-pb)/zmax);
   var px=function(y){return pl+(hExt-y)*sc},py=function(z){return H-pb-z*sc};
   var zr=function(y){return c.b.low+(y-y0)*tn};
-  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Side elevation">';
+  var s=svgOpen(W,H,'Side elevation');
   s+='<line class="d-ground" x1="'+(pl-30)+'" y1="'+py(0)+'" x2="'+(W-pr+30)+'" y2="'+py(0)+'"/>';
   s+='<rect class="d-slab" x="'+(pl-30)+'" y="'+py(0)+'" width="'+(W-pr-pl+60)+'" height="10"/>';
   // modules
   if(true){for(var r=0;r<c.rows;r++){
     var a=(S.rafterOvh+r*(c.dS+c.gap))*c.ct,b2=(S.rafterOvh+r*(c.dS+c.gap)+c.dS)*c.ct;
     var z1=zr(a)+80,z2=zr(b2)+80,th=Math.max(35*sc,3);
-    s+='<polygon class="d-mod" points="'+px(a)+','+py(z1)+' '+px(b2)+','+py(z2)+' '+px(b2)+','+(py(z2)-th)+' '+px(a)+','+(py(z1)-th)+'"/>';
+    s+='<polygon class="d-frame" style="fill:url(#'+curG+')" points="'+px(a)+','+py(z1)+' '+px(b2)+','+py(z2)+' '+px(b2)+','+(py(z2)-th)+' '+px(a)+','+(py(z1)-th)+'"/>';
   }}
   // rafter
   s+='<line class="d-raf" x1="'+px(0)+'" y1="'+py(zr(0))+'" x2="'+px(hExt)+'" y2="'+py(zr(hExt))+'"/>';
@@ -1892,11 +1938,11 @@ function plan(c){
   var xe=c.purlinLen,ye=c.hExt;
   var sc=Math.min((W-pl-pr)/xe,(H-pt-pb)/ye);
   var px=function(x){return pl+x*sc},py=function(y){return pt+(ye-y)*sc}; // high edge at top
-  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Plan view with foundation marking">';
+  var s=svgOpen(W,H,'Plan view with foundation marking');
   // modules outline
   for(var r=0;r<c.rows;r++)for(var k=0;k<c.per;k++){
     var xa=(c.purlinLen-c.runLen)/2+k*(c.dP+c.gap),ya=(S.rafterOvh+r*(c.dS+c.gap))*c.ct;
-    s+='<rect class="d-mod-l" x="'+px(xa)+'" y="'+py(ya+c.dS*c.ct)+'" width="'+(c.dP*sc)+'" height="'+(c.dS*c.ct*sc)+'"/>';
+    var yb=ya+c.dS*c.ct,nc=cells(c);s+=modSvg([px(xa),py(ya)],[px(xa+c.dP),py(ya)],[px(xa+c.dP),py(yb)],[px(xa),py(yb)],nc[0],nc[1],.6);
   }
   // purlins
   for(var r2=0;r2<c.rows;r2++){
@@ -1939,8 +1985,9 @@ function iso(c,panels){
   var sc=Math.min((W-80)/(maxx-minx),(H-90)/(maxy-miny));
   var ox=40-minx*sc+((W-80)-(maxx-minx)*sc)/2,oy=30-miny*sc+((H-90)-(maxy-miny)*sc)/2;
   function Q(x,y,z){var p=P(x,y,z);return (ox+p[0]*sc).toFixed(1)+','+(oy+p[1]*sc).toFixed(1)}
+  function Qn(x,y,z){var p=P(x,y,z);return [ox+p[0]*sc,oy+p[1]*sc]}
   function L(cls,a,b,extra){return '<polyline class="'+cls+'" points="'+Q(a[0],a[1],a[2])+' '+Q(b[0],b[1],b[2])+'"'+(extra||'')+'/>'}
-  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="3D view of the structure">';
+  var s=svgOpen(W,H,'3D view of the structure');
   // slab
   s+='<polygon class="d-slab" points="'+Q(-300,-300,0)+' '+Q(Xm+300,-300,0)+' '+Q(Xm+300,Ym+300,0)+' '+Q(-300,Ym+300,0)+'"/>';
   // back to front: x small and y large (far) first.  nearness = x + (Ym-y)
@@ -1979,10 +2026,10 @@ function iso(c,panels){
     for(var r3=0;r3<c.rows;r3++)for(var k=0;k<c.per;k++){
       var xa2=(Xm-c.runLen)/2+k*(c.dP+c.gap),xb=xa2+c.dP;
       var s1=S.rafterOvh+r3*(c.dS+c.gap),s2=s1+c.dS,ya=s1*c.ct,yb2=s2*c.ct;
-      quads.push({d:xa2+(Ym-ya),p:Q(xa2,ya,zr(ya)+110)+' '+Q(xb,ya,zr(ya)+110)+' '+Q(xb,yb2,zr(yb2)+110)+' '+Q(xa2,yb2,zr(yb2)+110)});
+      quads.push({d:xa2+(Ym-ya),A:Qn(xa2,ya,zr(ya)+110),B:Qn(xb,ya,zr(ya)+110),C:Qn(xb,yb2,zr(yb2)+110),D:Qn(xa2,yb2,zr(yb2)+110)});
     }
     quads.sort(function(a,b){return a.d-b.d});
-    quads.forEach(function(q){s+='<polygon class="d-mod" points="'+q.p+'"/>'});
+    var nc=cells(c);quads.forEach(function(q){s+=modSvg(q.A,q.B,q.C,q.D,nc[0],nc[1],1)});
   }
   s+=titleBlock(c,W,H,panels?'3D with modules':'3D structure')+'</svg>';
   return s;
@@ -2269,6 +2316,56 @@ function updateCons(){
     gx+='<text class="g-lbl" x="12" y="'+(y+rh/2+4)+'">'+esc(r.name.length>30?r.name.slice(0,29)+'…':r.name)+'</text><rect class="'+cl+'" x="'+(x0+r.off*u)+'" y="'+(y+6)+'" width="'+Math.max(3,r.dur*u-1)+'" height="'+(rh-12)+'"/>'});
   g('gantt').innerHTML=gx+'</svg>';
 }
+/* ----- drawing viewer and PDF ----- */
+function tt(m){var e=document.getElementById('toast');if(!e)return;e.textContent=m;e.hidden=false;clearTimeout(tt._t);tt._t=setTimeout(function(){e.hidden=true},3200)}
+var VIEWS={iso:'3D view',elev:'Side elevation',plan:'Plan and foundation marking'};
+function drawingSvg(v,c,pan){return v==='elev'?elevation(c):(v==='plan'?plan(c):iso(c,pan))}
+function drawingTitle(v,pan){return v==='iso'?(pan?'3D view with modules':'3D view, structure only'):VIEWS[v]}
+var lbView='iso',lbW=1200;
+function paintLb(){
+  var c=LA.cs[sel];
+  g('lbTitle').textContent=(c.b.name||'Block')+' · '+drawingTitle(lbView,showPanels);
+  g('lbBody').innerHTML=drawingSvg(lbView,c,showPanels);
+  g('lbBody').style.setProperty('--lbw',lbW+'px');
+}
+function openLb(v){if(!LA)return;lbView=v;lbW=Math.max(320,Math.round(((window.innerWidth||400)-4)*1.5));paintLb();g('lb').hidden=false;var lb=g('lbBody');lb.scrollTop=0;lb.scrollLeft=Math.max(0,(lb.scrollWidth-lb.clientWidth)/2)}
+function closeLb(){g('lb').hidden=true}
+['iso','elev','plan'].forEach(function(v){g(v+'Sheet').addEventListener('click',function(){openLb(v)})});
+g('lbClose').onclick=closeLb;
+g('lbPlus').onclick=function(){lbW=Math.min(4000,Math.round(lbW*1.25));g('lbBody').style.setProperty('--lbw',lbW+'px')};
+g('lbMinus').onclick=function(){lbW=Math.max(500,Math.round(lbW/1.25));g('lbBody').style.setProperty('--lbw',lbW+'px')};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!g('lb').hidden)closeLb()});
+function memberHtml(c){
+  var rows=LA.cut.filter(function(r){return r.blk===(c.b.name||'Block')});
+  var h='<div class="ep-memb"><table><thead><tr><th>Member</th><th>Qty</th><th>Length (mm)</th></tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr><td>'+esc(r.member)+'</td><td>'+r.qty+'</td><td>'+fmt(r.len)+'</td></tr>'});
+  h+='</tbody></table><p style="font-size:11px;margin:8px 0 0">Rafter '+fmt(c.rafterLen)+' mm · Purlin '+fmt(c.purlinLen)+' mm · '+c.nRaf+' frames at '+fmt(c.fs)+' mm · '+c.cols+' foundations · '+c.mods+' modules · tilt '+S.tilt+'°</p></div>';
+  return h;
+}
+function materialsHtml(){
+  var h='<div class="ep-memb"><table><thead><tr><th>Item</th><th>Specification</th><th>Qty</th><th>Unit</th></tr></thead><tbody>';
+  bomRows(LA).forEach(function(r){
+    if(r.g){h+='<tr><td colspan="4" style="font-weight:700;background:#EEF2F6">'+r.g+'</td></tr>';return}
+    h+='<tr><td>'+esc(r.item)+'</td><td style="text-align:left">'+esc(r.spec)+'</td><td>'+r.qty+'</td><td style="text-align:left">'+esc(r.unit)+'</td></tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function epcPdf(pages){
+  var d=new Date().toLocaleDateString('en-IN');
+  var h=pages.map(function(p,i){return '<div class="ep-page"><div class="ep-ph"><b>'+esc(S.project.name||'Project')+(S.project.site?' · '+esc(S.project.site):'')+'</b><span>'+esc(p.title)+'</span><span>Sheet '+(i+1)+' of '+pages.length+' · '+d+'</span></div><div class="ep-pb">'+p.svg+'</div><div class="ep-pf">Gensolar EPC · preliminary drawing, dimensions in mm. Confirm with the project engineer before fabrication.</div></div>'}).join('');
+  document.getElementById('printSheet').innerHTML=h;
+  tt('In the print window, choose Save as PDF');
+  setTimeout(function(){try{var N=window.GenSolarNative;if(N&&typeof N.printPdfLandscape==='function')N.printPdfLandscape();else if(N&&typeof N.printPdf==='function')N.printPdf();else window.print()}catch(e){tt('PDF is not available here')}},300);
+}
+g('lbPdf').onclick=function(){var c=LA.cs[sel];epcPdf([{title:(c.b.name||'Block')+' · '+drawingTitle(lbView,showPanels),svg:drawingSvg(lbView,c,showPanels)}])};
+g('pdfAll').onclick=function(){
+  var pages=[];
+  LA.cs.forEach(function(c){var n=c.b.name||'Block';
+    pages.push({title:n+' · 3D view with modules',svg:iso(c,true)},{title:n+' · 3D view, structure only',svg:iso(c,false)},{title:n+' · Side elevation',svg:elevation(c)},{title:n+' · Plan and foundation marking',svg:plan(c)},{title:n+' · Member lengths',svg:memberHtml(c)});
+  });
+  pages.push({title:'Materials',svg:materialsHtml()});
+  epcPdf(pages);
+};
 projOpts();bindInputs();
 
 bindInputs();renderBlocks();render();

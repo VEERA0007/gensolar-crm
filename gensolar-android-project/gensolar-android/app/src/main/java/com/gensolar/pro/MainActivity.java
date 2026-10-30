@@ -546,6 +546,16 @@ public class MainActivity extends Activity {
                 catch (Exception e) { Toast.makeText(MainActivity.this, "Could not open the website", Toast.LENGTH_LONG).show(); }
             });
         }
+        @JavascriptInterface public void printPdfLandscape() {
+            runOnUiThread(() -> {
+                try {
+                    PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+                    if (printManager == null) { Toast.makeText(MainActivity.this, "Print service unavailable on this device", Toast.LENGTH_LONG).show(); return; }
+                    String jobName = "GenSolar Drawings";
+                    printManager.print(jobName, webView.createPrintDocumentAdapter(jobName), new PrintAttributes.Builder().setMediaSize(PrintAttributes.MediaSize.ISO_A4.asLandscape()).setResolution(new PrintAttributes.Resolution("pdf", "pdf", 300, 300)).setMinMargins(PrintAttributes.Margins.NO_MARGINS).build());
+                } catch (Exception e) { Toast.makeText(MainActivity.this, "Could not open PDF print service", Toast.LENGTH_LONG).show(); }
+            });
+        }
         @JavascriptInterface public void printPdf() {
             runOnUiThread(() -> {
                 try {
